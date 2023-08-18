@@ -175,7 +175,7 @@ export default function SpeechPage({ navigation }) {
 
   return (
 <ScrollView contentContainerStyle={speechPageStyles.container}>
-      <Text style={styles.title}>Momento Contento X</Text>
+      <Text style={styles.title}>Momento Contento</Text>
 
       <Text style={speechPageStyles.currPlay}>Currently playing: {currentFileName}</Text>
 

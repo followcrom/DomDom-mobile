@@ -17,3 +17,5 @@ web-build/
 .metro-health-check*
 
 MyFirstHandiApp.code-workspace
+meditations.json
+audioFiles.json
