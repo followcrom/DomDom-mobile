@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Home from './Home';
+import Text from './Text';
+import Search from './Search';
+import Speech from './Speech';
+import Mediatations from './Meditations';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{ title: 'RanDOM WisDOM' }}
+        />
+        <Stack.Screen
+          name="Text"
+          component={Text}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Speech"
+          component={Speech}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Search"
+          component={Search}
+          options={{ headerShown: true }}
+        />
+          <Stack.Screen
+          name="Meditations"
+          component={Mediatations}
+          options={{ headerShown: true }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
