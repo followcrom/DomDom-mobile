@@ -9,7 +9,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#12abef',
+    color: '#d62c8b',
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'center',
@@ -25,8 +25,8 @@ export default StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: '#fff',
-    borderColor: '#12abef',
-    borderWidth: 3,
+    borderColor: '#000',
+    borderWidth: 2.5,
     borderRadius: 15,
   },
 
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 15,
   },
-
+  
   buttonStyle: {
     margin: 10, // Adds space around each button
   },

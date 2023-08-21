@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Linking, ScrollView, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio, InterruptionModeAndroid  } from 'expo-av';
 import styles from './styles/Styles';
 
 export default function SpeechPage({ navigation }) {
   const [sound, setSound] = useState();
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [currentFileName, setCurrentFileName] = useState('Nothing');
+  const [currentFileName, setCurrentFileName] = useState('Nothing playing');
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioFiles, setAudioFiles] = useState([]);
 
@@ -42,7 +42,9 @@ export default function SpeechPage({ navigation }) {
 
   const fetchAudioFiles = async () => {
     try {
-      const response = await fetch('https://domdom-audio.s3.eu-west-2.amazonaws.com/audioFiles.json');
+      const url = 'https://domdom-audio.s3.eu-west-2.amazonaws.com/audioFiles.json?' + new Date().getTime();
+      const response = await fetch(url);
+        
       if (!response.ok) {
         console.error('HTTP error', response.status);
       } else {
@@ -226,19 +228,19 @@ export default function SpeechPage({ navigation }) {
       <Text style={speechPageStyles.subtitle}>Visit us online:</Text>
       <View style={styles.buttonRow2}>
 
-<Ionicons style={styles.buttonStyle}  name="logo-github" size={38} color="green" onPress={() => {
+<Ionicons style={styles.buttonStyle}  name="logo-github" size={38} color="black" onPress={() => {
     console.log('Go to GitHub');
     opengH();
   }} 
 />
 
-<Ionicons style={styles.buttonStyle} name="globe-outline" size={38} color="orange"   onPress={() => {
+<Ionicons style={styles.buttonStyle} name="globe-outline" size={38} color="#12abef"   onPress={() => {
     console.log('Go to followcrom.online');
     openfC();
   }} 
 />
 
-<Ionicons style={styles.buttonStyle} name="mail-open-outline" size={38} color="#12abef"   onPress={() => {
+<Ionicons style={styles.buttonStyle} name="mail-open-outline" size={38} color="green"   onPress={() => {
     console.log('Contact followcrom');
     openContact();
   }} 
@@ -254,6 +256,10 @@ export default function SpeechPage({ navigation }) {
 <Ionicons style={styles.buttonStyle} name="logo-react" size={32} color="purple" onPress={() => console.log('React icon pressed')} />
 
 <Ionicons style={styles.buttonStyle} name="logo-javascript" size={32} color="green" onPress={() => console.log('JS icon pressed')} />
+
+<MaterialCommunityIcons style={styles.buttonStyle} name="aws" size={32} color="red" onPress={() => console.log('AWS icon pressed')} />
+
+<MaterialCommunityIcons style={styles.buttonStyle} name="lambda" size={32} color="orange" onPress={() => console.log('Lambda icon pressed')} />
 
 </View>
 </ScrollView>
@@ -284,7 +290,7 @@ const speechPageStyles = StyleSheet.create({
     marginBottom: 40,
     backgroundColor: '#12abef',
     borderColor: '#fff',
-    borderWidth: 2,
+    borderWidth: 2.5,
     borderRadius: 20,
     padding: 10,
   },
@@ -304,7 +310,7 @@ const speechPageStyles = StyleSheet.create({
   },
 
   currPlay: {
-    color: '#d62c8b',
+    color: '#12abef',
     fontSize: 16,
   },
 

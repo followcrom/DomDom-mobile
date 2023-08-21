@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, FlatList, StyleSheet, ToastAndroid } from 'react-native';
 import { Audio, InterruptionModeAndroid  } from 'expo-av';
 import styles from './styles/Styles';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Meditations({ navigation }) {
     const [sound, setSound] = useState(null);
@@ -31,19 +31,22 @@ useEffect(() => {
     setAudioMode();
 }, []);
 
-    const fetchAudioFiles = async () => {
-        try {
-          const response = await fetch('https://followcrom.online/meditations/meditations.json');
-          if (!response.ok) {
+const fetchAudioFiles = async () => {
+    try {
+        const url = 'https://followcrom.online/meditations/meditations.json?' + new Date().getTime();
+        const response = await fetch(url);
+
+        if (!response.ok) {
             console.error('HTTP error', response.status);
-          } else {
+        } else {
             const data = await response.json();
             setAudioFiles(data);
-          }
-        } catch (err) {
-          console.error('Fetch error', err);
         }
-      };
+    } catch (err) {
+        console.error('Fetch error', err);
+    }
+};
+
       
       useEffect(() => {
         fetchAudioFiles();
@@ -197,10 +200,10 @@ useEffect(() => {
             <View style={MedPageStyles.buttonRow}>
 
 {/* Skip Backward Button */}
-<Ionicons 
+<MaterialCommunityIcons 
     style={styles.buttonStyle} 
-    name="play-skip-back-circle-outline" 
-    size={48} 
+    name="step-backward" 
+    size={36} 
     color={sound ? "blue" : "grey"} 
     onPress={skipBackward} 
     disabled={!sound}
@@ -229,10 +232,10 @@ useEffect(() => {
 />
 
 {/* Skip Forward Button */}
-<Ionicons 
+<MaterialCommunityIcons 
     style={styles.buttonStyle} 
-    name="play-skip-forward-circle-outline" 
-    size={48} 
+    name="step-forward" 
+    size={36} 
     color={sound ? "blue" : "grey"} 
     onPress={skipForward} 
     disabled={!sound}
@@ -277,7 +280,7 @@ useEffect(() => {
 
         listItems: {
             textAlign: 'center',
-            color: '#d62c8b',
+            color: '#12abef',
             fontSize: 18,
             paddingVertical: 0
           },
@@ -285,7 +288,7 @@ useEffect(() => {
         currPlay: {
             textAlign: 'center',
             fontWeight: 'bold',
-            color: '#12abef',
+            color: '#d62c8b',
             fontSize: 16,
             paddingVertical: 10
           },
@@ -303,7 +306,7 @@ useEffect(() => {
         outerProgressBarContainer: {
             alignItems: 'center',
             justifyContent: 'center',
-            width: '100%', // Take the full width
+            width: '100%',
         },
         progressBarContainer: {
             flexDirection: 'row',

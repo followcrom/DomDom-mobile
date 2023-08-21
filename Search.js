@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, ScrollView, View, TextInput, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles/Styles';
 
-export default function SearchPage({ navigation }) {
+export default function SearchPage() {
     const [outputText, setOutputText] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -13,8 +13,19 @@ export default function SearchPage({ navigation }) {
 
 
     const handleSearch = () => {
-        const searchTerm = searchQuery;
+        const searchTerm = searchQuery.trim();  // Remove any leading or trailing white spaces.
+    
+        // Check if the search term is empty.
+        if (!searchTerm) {
+            setOutputText("Please enter a search term.");
+            setSearchPerformed(true);
+            return;  // Exit the function early.
+        }
 
+            // Set the "Searching..." message.
+    setOutputText("Searching...");
+    setSearchPerformed(true);
+    
         fetch('https://c7h8lmqr9l.execute-api.eu-west-2.amazonaws.com/searchPhraseStage/searchphrase', {
             method: 'POST',
             headers: {
@@ -32,7 +43,7 @@ export default function SearchPage({ navigation }) {
                     setOutputText(responseBody.Items[0].phrase); // Show the first result
                 } else {
                     setSearchResults([]);
-                    setOutputText("No matches found for your search term");
+                    setOutputText("No matches found for your search term.");
                     setCurrentIndex(0); // Reset currentIndex to 0 when no matches are found
                 }
             })
@@ -42,6 +53,7 @@ export default function SearchPage({ navigation }) {
         console.log('Searching for:', searchQuery);
         setSearchPerformed(true);
     };
+    
 
 
     const handleNext = () => {
@@ -66,7 +78,7 @@ export default function SearchPage({ navigation }) {
 
     return (
         <ScrollView contentContainerStyle={searchPageStyles.container}>
-            <Text style={styles.title}>Search for Wisdom:</Text>
+            <Text style={styles.title}>Search for Wisdom</Text>
 
             <TextInput
                 style={searchPageStyles.input}
@@ -82,7 +94,7 @@ export default function SearchPage({ navigation }) {
                     style={searchPageStyles.buttonIcon}
                     onPress={handleSearch}
                 >
-                    <Ionicons name="search-outline" size={48} color='white' />
+                    <MaterialCommunityIcons name="comment-search-outline" size={48} color='white' />
                     <Text style={searchPageStyles.buttonText}>Search</Text>
                 </TouchableOpacity>
             </View>
@@ -102,16 +114,16 @@ export default function SearchPage({ navigation }) {
                 <View style={styles.buttonRow2}>
                     <Ionicons
                         style={styles.buttonStyle}
-                        name="play-skip-back-circle-outline"
-                        size={48}
-                        color="green"
+                        name="play-skip-back-outline"
+                        size={36}
+                        color="orange"
                         onPress={handlePrevious}
                     />
                     <Ionicons
                         style={styles.buttonStyle}
-                        name="play-skip-forward-circle-outline"
-                        size={48}
-                        color="orange"
+                        name="play-skip-forward-outline"
+                        size={36}
+                        color="green"
                         onPress={handleNext}
                     />
                 </View>
@@ -158,7 +170,7 @@ const searchPageStyles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#12abef',
         borderColor: '#FFF',
-        borderWidth: 2,
+        borderWidth: 2.5,
         borderRadius: 20,
         padding: 10,
       },

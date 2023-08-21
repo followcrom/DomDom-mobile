@@ -35,7 +35,6 @@ export default function LandingPage({ navigation }) {
 }
 
 
-// Specific styles for TextPage component
 const homePageStyles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -72,7 +71,9 @@ const homePageStyles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#fcba79',
     padding: 0,
-    // flex: 1, // Let the button take the remaining space
+    borderColor: '#d62c8b',
+    borderWidth: 2,
+    borderRadius: 10,
     width: 120,
     height: 60,
     marginHorizontal: 60,
@@ -87,9 +88,9 @@ const homePageStyles = StyleSheet.create({
   fcButton: {
     width: '60%',
     position: 'absolute',
-    bottom: '5%',
+    bottom: '7%',
     left: '20%',
-    borderColor: '#1dab92',
+    borderColor: '#fff',
     borderWidth: 2,
     borderRadius: 10,
     backgroundColor: '#d62c8b',
@@ -99,9 +100,9 @@ const homePageStyles = StyleSheet.create({
 
   fcButtonText: {
     fontSize: 18,
-    color: '#1dab92',
-    marginTop: 8,
-    marginBottom: 8,
+    color: '#fff',
+    marginTop: 5,
+    marginBottom: 5,
     textAlign: 'center',
   },
 });

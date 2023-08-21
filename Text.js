@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, View, Button, TouchableOpacity, Pressable, Linking } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Ionicons, MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from './styles/Styles';
 
 export default function TextPage({ navigation }) {
-  const [outputText, setOutputText] = useState('Loading wisdom...');
+  const [outputText, setOutputText] = useState('');
   const [phraseId, setPhraseId] = useState(0);
   const [totalPhrases, setTotalPhrases] = useState(0);
 
@@ -13,24 +13,23 @@ export default function TextPage({ navigation }) {
   }, []);
 
   const getRandomPhrase = async () => {
+    setOutputText("Loading...");
+
     try {
-      const response = await fetch('https://ur3fnc2j12.execute-api.eu-west-2.amazonaws.com/getPhraseStage/getphrase');
-      const data = await response.json();
-      console.log(data); // log the received data
-      setOutputText(data.phrase);
-      setPhraseId(data.id);
-      setTotalPhrases(data.total);
-      return data.phrase;
+        const response = await fetch('https://ur3fnc2j12.execute-api.eu-west-2.amazonaws.com/getPhraseStage/getphrase');
+        const data = await response.json();
+        console.log(data);
+        setOutputText(data.phrase);
+        setPhraseId(data.id);
+        setTotalPhrases(data.total);
+        return data.phrase;
     } catch (err) {
-      console.error(err);
-      return 'An error occurred while fetching the phrase.';
+        console.error(err);
+        setOutputText('An error occurred while fetching the phrase.');
+        return 'An error occurred while fetching the phrase.';
     }
-  };
+};
 
-
-  const openWebPage = () => {
-    Linking.openURL('https://followcrom.online');
-  };
 
   return (
     <ScrollView contentContainerStyle={textPageStyles.container}>
@@ -41,7 +40,7 @@ export default function TextPage({ navigation }) {
       </View>
 
       <Text style={textPageStyles.phraseNo}>
-        Phrase {phraseId} of {totalPhrases}
+        Wisdom {phraseId} of {totalPhrases}
       </Text>
 
       <View style={textPageStyles.buttonContainer}>
@@ -59,7 +58,7 @@ export default function TextPage({ navigation }) {
           style={textPageStyles.buttonIcon}
           onPress={() => navigation.navigate('Search')}
         >
-          <Ionicons name="bonfire-outline" size={48} color='white' />
+          <MaterialCommunityIcons name="database-search-outline" size={48} color='white' />
           <Text style={textPageStyles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
@@ -88,7 +87,7 @@ const textPageStyles = StyleSheet.create({
   phraseNo: {
     fontSize: 15,
     color: '#d62c8b',
-    marginBottom: 10,
+    marginBottom: 15,
     textAlign: 'center',
   },
 
@@ -99,7 +98,7 @@ const textPageStyles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: '#12abef',
     borderColor: '#FFF',
-    borderWidth: 2,
+    borderWidth: 2.5,
     borderRadius: 20,
     padding: 10,
   },
