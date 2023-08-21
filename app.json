@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "RanDOM WisDOM",
-    "description": "Wise words from the great and the good.",
+    "description": "Wise words to help cultivate an attitide of gratitude.",
     "slug": "MyFirstHandiApp",
-    "version": "3.0.0",
-    "orientation": "portrait",
+    "version": "1.0.0",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
@@ -12,23 +12,22 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "package": "online.followcrom.RandomWisdom",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "androidStatusBar": {
-        "hidden": false,
-        "barStyle": "dark-content",
-        "backgroundColor": "#ffffff"
       }
+    },
+    "androidStatusBar": {
+      "translucent": false,
+      "barStyle": "dark-content",
+      "backgroundColor": "#12abef"
     },
     "web": {
       "favicon": "./assets/favicon.png"

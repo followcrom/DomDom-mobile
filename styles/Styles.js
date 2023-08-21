@@ -6,10 +6,22 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+
+  content: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
+
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#d62c8b',
+    color: '#08b0f9',
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'center',
@@ -21,12 +33,12 @@ export default StyleSheet.create({
   },
 
   textContainer: {
-    width: '95%',
+    width: '90%',
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: '#fff',
     borderColor: '#000',
-    borderWidth: 2.5,
+    borderWidth: 3,
     borderRadius: 15,
   },
 
@@ -36,15 +48,59 @@ export default StyleSheet.create({
     padding: 10,
   },
 
-  buttonRow2: {
+  transportButtonsRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',  // or 'space-around' or 'space-evenly'
+    justifyContent: 'space-evenly',  // or 'space-around' or 'space-evenly'
     alignItems: 'center',
-    paddingVertical: 15,
   },
   
-  buttonStyle: {
+  transportButtonsStyle: {
     margin: 10, // Adds space around each button
+  },
+
+  buttonContainer: {
+    alignItems: 'center',
+    width: 280,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#007BFF',
+    borderColor: '#FFF',
+    borderWidth: 2.5,
+    borderRadius: 20,
+    padding: 10,
+  },
+
+  buttonIcon: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    marginLeft: 10, // Add some space between the icon and text
+    padding: 10,
+  },
+
+  
+  footerText: {
+    fontSize: 18,
+    color: '#fff',
+    marginTop: 5,
+    marginBottom: 5,
+    textAlign: 'center',
+  },
+
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    borderColor: '#fff',
+    borderWidth: 2.5,
+    backgroundColor: '#f39b51'
   },
 });

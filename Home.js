@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Pressable, Linking } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
+import styles from './styles/Styles';
 
 
 const openWebPage = () => {
@@ -10,6 +11,8 @@ const openWebPage = () => {
 export default function LandingPage({ navigation }) {
   return (
     <ImageBackground source={require('./images/random_wisdom.png')} style={homePageStyles.backgroundImage}>
+
+<View style={styles.content}>
 
       <View style={homePageStyles.titleContainer}>
         <Text style={homePageStyles.title}>RanDOM WisDOM</Text>
@@ -26,10 +29,15 @@ export default function LandingPage({ navigation }) {
       </View>
 
 
-      <Pressable style={homePageStyles.fcButton} onPress={openWebPage}>
-        <Text style={homePageStyles.fcButtonText}>www.followCrom.online</Text>
-      </Pressable>
-
+      </View>
+      
+            {/* Footer */}
+            <View style={styles.footer}>
+      <TouchableOpacity onPress={openWebPage}>
+          <Text style={styles.footerText}>followCrom.online</Text>
+        </TouchableOpacity>
+      </View>
+      
     </ImageBackground>
   );
 }
@@ -76,33 +84,12 @@ const homePageStyles = StyleSheet.create({
     borderRadius: 10,
     width: 120,
     height: 60,
-    marginHorizontal: 60,
+    marginHorizontal: '15%',
   },
 
   buttonText: {
     fontSize: 20,
     // fontWeight: 'bold',
     color: '#d62c8b',
-  },
-
-  fcButton: {
-    width: '60%',
-    position: 'absolute',
-    bottom: '7%',
-    left: '20%',
-    borderColor: '#fff',
-    borderWidth: 2,
-    borderRadius: 10,
-    backgroundColor: '#d62c8b',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  fcButtonText: {
-    fontSize: 18,
-    color: '#fff',
-    marginTop: 5,
-    marginBottom: 5,
-    textAlign: 'center',
   },
 });

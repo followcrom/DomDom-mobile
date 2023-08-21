@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Linking, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Linking, ScrollView, TouchableOpacity, Pressable, Button } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Audio, InterruptionModeAndroid  } from 'expo-av';
 import styles from './styles/Styles';
@@ -155,6 +155,9 @@ export default function SpeechPage({ navigation }) {
   }, [sound]);
 
 
+
+  // This effect will run when the screen is blurred
+
   useEffect(() => {
     // This is the event handler
     const handleBlur = async () => {
@@ -177,20 +180,21 @@ export default function SpeechPage({ navigation }) {
 
   return (
 <ScrollView contentContainerStyle={speechPageStyles.container}>
+
       <Text style={styles.title}>Momento Contento</Text>
 
-      <Text style={speechPageStyles.currPlay}>Currently playing: {currentFileName}</Text>
+
 
 
       {/* Only display when playing */}
       {/* {isPlaying && <Text style={speechPageStyles.currPlay}>Currently playing: {currentFileName}</Text>} */}
 
-      <View style={styles.buttonRow2}>
+      <View style={styles.transportButtonsRow}>
 
-      <Ionicons style={styles.buttonStyle}  name="play-skip-back-circle-outline" size={48} color="blue" onPress={replaySound} disabled={!currentAudio} />
+      <Ionicons style={styles.transportButtonsStyle}  name="play-skip-back-circle-outline" size={48} color="blue" onPress={replaySound} disabled={!currentAudio} />
 
       <Ionicons 
-    style={styles.buttonStyle} 
+    style={styles.transportButtonsStyle} 
     name="play-circle-outline"
     size={48} 
     color={!!sound ? "darkgrey" : "green"}
@@ -198,21 +202,22 @@ export default function SpeechPage({ navigation }) {
     disabled={!!sound}
 />
 
-
-
-
       {
     isPlaying ?
-      <Ionicons style={styles.buttonStyle} name="pause-circle-outline" size={48} color={sound ? "orange" : "grey"} onPress={pauseSound} />
+      <Ionicons style={styles.transportButtonsStyle} name="pause-circle-outline" size={48} color={sound ? "orange" : "grey"} onPress={pauseSound} />
     :
-    <Ionicons style={styles.buttonStyle} name="play-circle-outline" size={48} color={sound ? "orange" : "grey"} onPress={pauseSound} />
+    <Ionicons style={styles.transportButtonsStyle} name="play-circle-outline" size={48} color={sound ? "orange" : "grey"} onPress={pauseSound} />
   }
 
-      <Ionicons style={styles.buttonStyle}  name="stop-circle-outline" size={48} color="red" onPress={stopSound} />
+      <Ionicons style={styles.transportButtonsStyle}  name="stop-circle-outline" size={48} color="red" onPress={stopSound} />
 
-      <Ionicons style={styles.buttonStyle}  name="play-skip-forward-circle-outline" size={48} color="blue" onPress={playSound} />
+      <Ionicons style={styles.transportButtonsStyle}  name="play-skip-forward-circle-outline" size={48} color="blue" onPress={playSound} />
 
       </View>
+
+
+      <Text style={speechPageStyles.currPlay}>Currently playing: {currentFileName}</Text>
+
 
       <View style={speechPageStyles.buttonContainer}>
         <TouchableOpacity
@@ -226,21 +231,21 @@ export default function SpeechPage({ navigation }) {
 
 
       <Text style={speechPageStyles.subtitle}>Visit us online:</Text>
-      <View style={styles.buttonRow2}>
+      <View style={speechPageStyles.iconButtonsRow}>
 
-<Ionicons style={styles.buttonStyle}  name="logo-github" size={38} color="black" onPress={() => {
+<Ionicons style={speechPageStyles.iconButtons}  name="logo-github" size={38} color="black" onPress={() => {
     console.log('Go to GitHub');
     opengH();
   }} 
 />
 
-<Ionicons style={styles.buttonStyle} name="globe-outline" size={38} color="#12abef"   onPress={() => {
+<Ionicons style={speechPageStyles.iconButtons} name="globe-outline" size={38} color="#12abef"   onPress={() => {
     console.log('Go to followcrom.online');
     openfC();
   }} 
 />
 
-<Ionicons style={styles.buttonStyle} name="mail-open-outline" size={38} color="green"   onPress={() => {
+<Ionicons style={speechPageStyles.iconButtons} name="mail-open-outline" size={38} color="green"   onPress={() => {
     console.log('Contact followcrom');
     openContact();
   }} 
@@ -249,19 +254,22 @@ export default function SpeechPage({ navigation }) {
 </View>
 
 <Text style={speechPageStyles.subtitle}>Technologies:</Text>
-<View style={styles.buttonRow2}>
 
-<Ionicons style={styles.buttonStyle}  name="logo-nodejs" size={32} color="blue" onPress={() => console.log('Node icon pressed')} />
+<View style={speechPageStyles.iconButtonsRow}>
 
-<Ionicons style={styles.buttonStyle} name="logo-react" size={32} color="purple" onPress={() => console.log('React icon pressed')} />
+<Ionicons style={speechPageStyles.iconButtons}  name="logo-nodejs" size={32} color="blue" onPress={() => console.log('Node icon pressed')} />
 
-<Ionicons style={styles.buttonStyle} name="logo-javascript" size={32} color="green" onPress={() => console.log('JS icon pressed')} />
+<Ionicons style={speechPageStyles.iconButtons} name="logo-react" size={32} color="purple" onPress={() => console.log('React icon pressed')} />
 
-<MaterialCommunityIcons style={styles.buttonStyle} name="aws" size={32} color="red" onPress={() => console.log('AWS icon pressed')} />
+<Ionicons style={speechPageStyles.iconButtons} name="logo-javascript" size={32} color="green" onPress={() => console.log('JS icon pressed')} />
 
-<MaterialCommunityIcons style={styles.buttonStyle} name="lambda" size={32} color="orange" onPress={() => console.log('Lambda icon pressed')} />
+<MaterialCommunityIcons style={speechPageStyles.iconButtons} name="aws" size={32} color="red" onPress={() => console.log('AWS icon pressed')} />
+
+<MaterialCommunityIcons style={speechPageStyles.iconButtons} name="lambda" size={32} color="orange" onPress={() => console.log('Lambda icon pressed')} />
 
 </View>
+
+
 </ScrollView>
     
   );
@@ -276,20 +284,26 @@ const speechPageStyles = StyleSheet.create({
       alignItems: 'center',
   },
 
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#d62c8b',
+
+  currPlay: {
+    color: '#FF7F00',
+    fontSize: 16,
     textAlign: 'center',
+    marginBottom: 20,
   },
 
+
+
+
   buttonContainer: {
+    marginLeft: "auto",
+    marginRight: "auto",
     justifyContent: 'center',
     alignItems: 'center',
-    width: '80%',
-    marginBottom: 40,
+    width: 300,
+    marginBottom: 30,
     backgroundColor: '#12abef',
-    borderColor: '#fff',
+    borderColor: '#FFF',
     borderWidth: 2.5,
     borderRadius: 20,
     padding: 10,
@@ -309,9 +323,25 @@ const speechPageStyles = StyleSheet.create({
     padding: 10,
   },
 
-  currPlay: {
-    color: '#12abef',
-    fontSize: 16,
+
+  subtitle: {
+    marginTop: 0,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FF7F00',
+    textAlign: 'center',
+  },
+
+
+  iconButtonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 25,
+  },
+  
+  iconButtons: {
+    margin: 15, // Adds space around each button
   },
 
 });

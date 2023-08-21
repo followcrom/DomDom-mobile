@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
 import { Ionicons, MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from './styles/Styles';
 
@@ -31,8 +31,13 @@ export default function TextPage({ navigation }) {
 };
 
 
+const openWebPage = () => {
+  Linking.openURL('https://followcrom.online');
+};
+
   return (
-    <ScrollView contentContainerStyle={textPageStyles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
+      
       <Text style={styles.title}>Put it into Words</Text>
 
       <View style={styles.textContainer}>
@@ -70,33 +75,19 @@ export default function TextPage({ navigation }) {
 
 // Specific styles for TextPage component
 const textPageStyles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-
-  subtitle: {
-    fontSize: 20,
-    color: '#d62c8b',
-    marginTop: 15,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
 
   phraseNo: {
     fontSize: 15,
-    color: '#d62c8b',
+    color: '#FF7F00',
     marginBottom: 15,
     textAlign: 'center',
   },
 
   buttonContainer: {
-    justifyContent: 'center',
     alignItems: 'center',
-    width: '80%',
+    width: 300,
     marginBottom: 10,
-    backgroundColor: '#12abef',
+    backgroundColor: '#007BFF',
     borderColor: '#FFF',
     borderWidth: 2.5,
     borderRadius: 20,

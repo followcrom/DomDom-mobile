@@ -89,9 +89,9 @@ export default function SearchPage() {
             />
 
 
-            <View style={searchPageStyles.buttonContainer}>
+            <View style={styles.buttonContainer}>
                 <TouchableOpacity
-                    style={searchPageStyles.buttonIcon}
+                    style={styles.buttonIcon}
                     onPress={handleSearch}
                 >
                     <MaterialCommunityIcons name="comment-search-outline" size={48} color='white' />
@@ -111,16 +111,16 @@ export default function SearchPage() {
 
             {/* Conditionally render the buttonRow2 */}
             {searchResults.length > 0 && (
-                <View style={styles.buttonRow2}>
+                <View style={styles.transportButtonsRow}>
                     <Ionicons
-                        style={styles.buttonStyle}
+                        style={styles.transportButtonsStyle}
                         name="play-skip-back-outline"
                         size={36}
                         color="orange"
                         onPress={handlePrevious}
                     />
                     <Ionicons
-                        style={styles.buttonStyle}
+                        style={styles.transportButtonsStyle}
                         name="play-skip-forward-outline"
                         size={36}
                         color="green"
@@ -158,7 +158,7 @@ const searchPageStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 15,
-        color: '#d62c8b',
+        color: '#FF7F00',
         textAlign: 'center',
     },
 

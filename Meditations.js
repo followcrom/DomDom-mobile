@@ -184,7 +184,7 @@ const fetchAudioFiles = async () => {
                         style={{  
                             padding: 10,
                             borderBottomWidth: 1, 
-                            borderBottomColor: '#d62c8b',
+                            borderBottomColor: '#007BFF',
                             backgroundColor: 'white' }}
                         onPress={() => playSelectedSound(item.url, item.name)}>
                         <Text style={MedPageStyles.listItems}>{item.name}</Text>
@@ -201,7 +201,7 @@ const fetchAudioFiles = async () => {
 
 {/* Skip Backward Button */}
 <MaterialCommunityIcons 
-    style={styles.buttonStyle} 
+    style={styles.transportButtonsStyle} 
     name="step-backward" 
     size={36} 
     color={sound ? "blue" : "grey"} 
@@ -211,9 +211,9 @@ const fetchAudioFiles = async () => {
 
 {/* Play/Pause Button */}
 {isPlaying 
-    ? <Ionicons style={styles.buttonStyle} name="pause-circle-outline" size={48} color="orange" onPress={togglePlayback} />
+    ? <Ionicons style={styles.transportButtonsStyle} name="pause-circle-outline" size={48} color="orange" onPress={togglePlayback} />
     : <Ionicons 
-        style={styles.buttonStyle} 
+        style={styles.transportButtonsStyle} 
         name="play-circle-outline" 
         size={48} 
         color={sound ? "green" : "grey"}
@@ -223,7 +223,7 @@ const fetchAudioFiles = async () => {
 
 {/* Stop Button */}
 <Ionicons 
-    style={styles.buttonStyle}  
+    style={styles.transportButtonsStyle}  
     name="stop-circle-outline" 
     size={48} 
     color={sound ? "red" : "grey"} 
@@ -233,7 +233,7 @@ const fetchAudioFiles = async () => {
 
 {/* Skip Forward Button */}
 <MaterialCommunityIcons 
-    style={styles.buttonStyle} 
+    style={styles.transportButtonsStyle} 
     name="step-forward" 
     size={36} 
     color={sound ? "blue" : "grey"} 
@@ -251,7 +251,7 @@ const fetchAudioFiles = async () => {
                     height: 20,
                     borderRadius: 10,
                     width: `${progress}%`,
-                    backgroundColor: '#d62c8b',
+                    backgroundColor: '#FF7F00',
                 }} />
             </View></View>
 
@@ -288,7 +288,7 @@ const fetchAudioFiles = async () => {
         currPlay: {
             textAlign: 'center',
             fontWeight: 'bold',
-            color: '#d62c8b',
+            color: '#FF7F00',
             fontSize: 16,
             paddingVertical: 10
           },
@@ -315,7 +315,7 @@ const fetchAudioFiles = async () => {
             width: '80%',
             height: 24,
             backgroundColor: 'white',
-            borderColor: '#d62c8b',
+            borderColor: '#FF7F00',
             borderWidth: 2,
             borderRadius: 20,
             overflow: 'hidden'
