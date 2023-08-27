@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Pressable, Linking } from 'react-native';
 import styles from './styles/Styles';
 
 
 const openWebPage = () => {
   Linking.openURL('https://followcrom.online');
 };
+
+
 
 
 export default function LandingPage({ navigation }) {
@@ -19,15 +21,38 @@ export default function LandingPage({ navigation }) {
       </View>
 
       <View style={homePageStyles.buttonContainer}>
-        <TouchableOpacity style={homePageStyles.buttonHome} onPress={() => navigation.navigate('Text')}>
-          <Text style={homePageStyles.buttonText}>TEXT</Text>
-        </TouchableOpacity>
 
-        <TouchableOpacity style={homePageStyles.buttonHome} onPress={() => navigation.navigate('Speech')}>
-          <Text style={homePageStyles.buttonText}>SPEECH</Text>
-        </TouchableOpacity>
+        <Pressable
+  onPress={() => navigation.navigate('Text')}
+  style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? '#08b0f9' : '#fcba79',
+      borderColor: pressed ? '#fff' : '#d62c8b',
+    },
+    homePageStyles.buttonHome
+  ]}
+>
+  <View style={homePageStyles.textContainer}>
+  <Text style={homePageStyles.buttonText}>TEXT</Text>
+  </View>
+</Pressable>
+
+        <Pressable
+  onPress={() => navigation.navigate('Speech')}
+  style={({ pressed }) => [
+    {
+      backgroundColor: pressed ? '#08b0f9' : '#fcba79',
+      borderColor: pressed ? '#fff' : '#d62c8b',
+    },
+    homePageStyles.buttonHome
+  ]}
+>
+  <View style={homePageStyles.textContainer}>
+  <Text style={homePageStyles.buttonText}>SPEECH</Text>
+  </View>
+</Pressable>
+
       </View>
-
 
       </View>
       
@@ -50,6 +75,17 @@ const homePageStyles = StyleSheet.create({
     padding: 0
   },
 
+  button: {
+    borderRadius: 15,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  textContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
   titleContainer: {
     width: '100%',
     marginTop: 2,
@@ -69,6 +105,7 @@ const homePageStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    activeOpacity: 1,
     position: 'absolute',
     bottom: '40%',
     width: '100%', // Ensure the container takes the full width of the screen
@@ -77,19 +114,17 @@ const homePageStyles = StyleSheet.create({
   buttonHome: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fcba79',
     padding: 0,
-    borderColor: '#d62c8b',
     borderWidth: 2,
     borderRadius: 10,
     width: 120,
     height: 60,
     marginHorizontal: '15%',
   },
-
+  
   buttonText: {
     fontSize: 20,
-    // fontWeight: 'bold',
     color: '#d62c8b',
   },
+  
 });

@@ -8,11 +8,13 @@ import Text from './Text';
 import Search from './Search';
 import Speech from './Speech';
 import Mediatations from './Meditations';
+import { ThemeProvider } from './ThemeContext';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <ThemeProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
@@ -42,5 +44,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </ThemeProvider>
   );
 }

@@ -19,5 +19,12 @@
         "buildType": "app-bundle"
       }
     }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../../RanDomWisDom (Mobile)/keys/pc-api-5317464024462469704-19-01c8996118c0.json"
+      }
+    }
   }
 }

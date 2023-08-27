@@ -8,10 +8,10 @@ export default function Meditations({ navigation }) {
     const [sound, setSound] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playbackPosition, setPlaybackPosition] = useState(0);
-const [playbackDuration, setPlaybackDuration] = useState(0);
-const progress = playbackDuration > 0 ? (playbackPosition / playbackDuration) * 100 : 0;
-const [audioFiles, setAudioFiles] = useState([]);
-const [currentMeditationName, setCurrentMeditationName] = useState("Please select a meditation");
+    const [playbackDuration, setPlaybackDuration] = useState(0);
+    const progress = playbackDuration > 0 ? (playbackPosition / playbackDuration) * 100 : 0;
+    const [audioFiles, setAudioFiles] = useState([]);
+    const [currentMeditationName, setCurrentMeditationName] = useState('Please select a meditation');
 
 
 
@@ -115,7 +115,7 @@ const fetchAudioFiles = async () => {
     async function skipBackward() {
         if (sound) {
             const status = await sound.getStatusAsync();
-            const newPosition = Math.max(0, status.positionMillis - 10000); // 10 seconds = 10,000 milliseconds
+            const newPosition = Math.max(0, status.positionMillis - 10000);
             await sound.setPositionAsync(newPosition);
         }
     }
@@ -159,14 +159,11 @@ const fetchAudioFiles = async () => {
           if (sound) {
             sound.stopAsync();
           }
-        };
-        
+        }; 
         // Add the event listener
         const unsubscribe = navigation.addListener('blur', handleBlur);
-      
         // Return the cleanup function
         return unsubscribe;
-      
       }, [sound, navigation]);
 
 
@@ -176,30 +173,31 @@ const fetchAudioFiles = async () => {
 
 
             <FlatList
-            contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 8}}
-                data={audioFiles}
-                keyExtractor={(item) => item.name}
-                renderItem={({ item }) => (
-                    <TouchableOpacity 
-                        style={{  
-                            padding: 10,
-                            borderBottomWidth: 1, 
-                            borderBottomColor: '#007BFF',
-                            backgroundColor: 'white' }}
-                        onPress={() => playSelectedSound(item.url, item.name)}>
-                        <Text style={MedPageStyles.listItems}>{item.name}</Text>
-                    </TouchableOpacity>
-                )}
-            />
+  contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 8 }}
+  data={audioFiles}
+  keyExtractor={(item) => item.name}
+  renderItem={({ item, index }) => (
+    <TouchableOpacity 
+      style={[
+        MedPageStyles.audioListItem, 
+        { backgroundColor: index % 2 === 0 ? '#e0e0e0' : 'white' } // Alternate background colors
+      ]}
+      accessible={true} 
+      accessibilityLabel={`Play sound ${item.name}`}
+      onPress={() => playSelectedSound(item.url, item.name)}
+    >
+      <Text style={MedPageStyles.listItems}>{item.name}</Text>
+    </TouchableOpacity>
+  )}
+/>
+
 
 
 <Text style={MedPageStyles.currPlay}>{currentMeditationName}</Text>
 
-    
-            {/* Audio Control Buttons */}
             <View style={MedPageStyles.buttonRow}>
 
-{/* Skip Backward Button */}
+
 <MaterialCommunityIcons 
     style={styles.transportButtonsStyle} 
     name="step-backward" 
@@ -209,7 +207,7 @@ const fetchAudioFiles = async () => {
     disabled={!sound}
 />
 
-{/* Play/Pause Button */}
+
 {isPlaying 
     ? <Ionicons style={styles.transportButtonsStyle} name="pause-circle-outline" size={48} color="orange" onPress={togglePlayback} />
     : <Ionicons 
@@ -221,7 +219,7 @@ const fetchAudioFiles = async () => {
       />
 }
 
-{/* Stop Button */}
+
 <Ionicons 
     style={styles.transportButtonsStyle}  
     name="stop-circle-outline" 
@@ -231,7 +229,7 @@ const fetchAudioFiles = async () => {
     disabled={!sound}
 />
 
-{/* Skip Forward Button */}
+
 <MaterialCommunityIcons 
     style={styles.transportButtonsStyle} 
     name="step-forward" 
@@ -242,8 +240,6 @@ const fetchAudioFiles = async () => {
 />
 </View>
 
-    
-
             {/* Progress Bar */}
             <View style={MedPageStyles.outerProgressBarContainer}>
     <View style={MedPageStyles.progressBarContainer}>
@@ -251,7 +247,7 @@ const fetchAudioFiles = async () => {
                     height: 20,
                     borderRadius: 10,
                     width: `${progress}%`,
-                    backgroundColor: '#FF7F00',
+                    backgroundColor: '#12abef',
                 }} />
             </View></View>
 
@@ -273,23 +269,23 @@ const fetchAudioFiles = async () => {
         },
 
         audioListItem: {
-            padding: 10, 
+            paddingVertical: 16, // Increase padding for better touch target size
+            paddingHorizontal: 10,
             borderBottomWidth: 1, 
             borderBottomColor: '#ccc'
-        },
-
-        listItems: {
+          },
+          
+          listItems: {
             textAlign: 'center',
             color: '#12abef',
-            fontSize: 18,
-            paddingVertical: 0
+            fontSize: 20
           },
 
         currPlay: {
             textAlign: 'center',
             fontWeight: 'bold',
             color: '#FF7F00',
-            fontSize: 16,
+            fontSize: 18,
             paddingVertical: 10
           },
 
@@ -315,7 +311,7 @@ const fetchAudioFiles = async () => {
             width: '80%',
             height: 24,
             backgroundColor: 'white',
-            borderColor: '#FF7F00',
+            borderColor: '#007BFF',
             borderWidth: 2,
             borderRadius: 20,
             overflow: 'hidden'

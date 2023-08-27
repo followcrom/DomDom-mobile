@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, View, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TouchableOpacity, ToastAndroid } from 'react-native';
 import { Ionicons, MaterialCommunityIcons  } from '@expo/vector-icons';
 import styles from './styles/Styles';
 
 export default function TextPage({ navigation }) {
   const [outputText, setOutputText] = useState('');
   const [phraseId, setPhraseId] = useState(0);
-  const [totalPhrases, setTotalPhrases] = useState(0);
+  
 
   useEffect(() => {
     getRandomPhrase();
@@ -21,32 +21,30 @@ export default function TextPage({ navigation }) {
         console.log(data);
         setOutputText(data.phrase);
         setPhraseId(data.id);
-        setTotalPhrases(data.total);
         return data.phrase;
     } catch (err) {
+        console.log(err);
         console.error(err);
-        setOutputText('An error occurred while fetching the phrase.');
+        setOutputText("An error occurred. Please try again.");
         return 'An error occurred while fetching the phrase.';
     }
 };
 
 
-const openWebPage = () => {
-  Linking.openURL('https://followcrom.online');
+const showToast = () => {
+  ToastAndroid.show(phraseId.toString(), ToastAndroid.SHORT);
 };
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       
       <Text style={styles.title}>Put it into Words</Text>
 
-      <View style={styles.textContainer}>
-        <Text style={styles.textOutput}>{outputText}</Text>
-      </View>
+      <View style={styles.textContainer} onTouchEnd={showToast}>
+      <Text style={styles.textOutput}>{outputText}</Text>
+    </View>
 
-      <Text style={textPageStyles.phraseNo}>
-        Wisdom {phraseId} of {totalPhrases}
-      </Text>
 
       <View style={textPageStyles.buttonContainer}>
         <TouchableOpacity
@@ -57,6 +55,7 @@ const openWebPage = () => {
           <Text style={textPageStyles.buttonText}>Generate Wisdom</Text>
         </TouchableOpacity>
       </View>
+
 
       <View style={textPageStyles.buttonContainer}>
         <TouchableOpacity
@@ -76,16 +75,10 @@ const openWebPage = () => {
 // Specific styles for TextPage component
 const textPageStyles = StyleSheet.create({
 
-  phraseNo: {
-    fontSize: 15,
-    color: '#FF7F00',
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-
   buttonContainer: {
     alignItems: 'center',
     width: 300,
+    marginTop: 10,
     marginBottom: 10,
     backgroundColor: '#007BFF',
     borderColor: '#FFF',
@@ -96,8 +89,8 @@ const textPageStyles = StyleSheet.create({
 
   buttonIcon: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 
   buttonText: {
@@ -105,6 +98,6 @@ const textPageStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     marginLeft: 10, // Add some space between the icon and text
-    padding: 10,
+    padding: 16,
   },
 });

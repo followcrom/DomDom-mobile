@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, ScrollView, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TextInput, TouchableOpacity,ToastAndroid } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import styles from './styles/Styles';
 
@@ -9,6 +9,7 @@ export default function SearchPage() {
     const [searchResults, setSearchResults] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [searchPerformed, setSearchPerformed] = useState(false);
+    const [phraseId, setPhraseId] = useState(0);
 
 
 
@@ -41,6 +42,8 @@ export default function SearchPage() {
                     setSearchResults(responseBody.Items);
                     setCurrentIndex(0); // Reset currentIndex to 0
                     setOutputText(responseBody.Items[0].phrase); // Show the first result
+                    console.log("ID:", responseBody.Items[0].id);
+                    setPhraseId(responseBody.Items[0].id);
                 } else {
                     setSearchResults([]);
                     setOutputText("No matches found for your search term.");
@@ -71,10 +74,13 @@ export default function SearchPage() {
     useEffect(() => {
         if (searchResults.length > 0 && currentIndex < searchResults.length) {
             setOutputText(searchResults[currentIndex].phrase);
+            setPhraseId(searchResults[currentIndex].id);
         }
     }, [currentIndex, searchResults]);
 
-
+    const showToast = () => {
+        ToastAndroid.show(phraseId.toString(), ToastAndroid.SHORT);
+      };
 
     return (
         <ScrollView contentContainerStyle={searchPageStyles.container}>
@@ -101,8 +107,8 @@ export default function SearchPage() {
 
             {
   searchPerformed && (
-    <View style={styles.textContainer}>
-      <Text style={styles.textOutput}>{outputText}</Text>
+    <View style={styles.textContainer} onTouchEnd={showToast}>
+    <Text style={styles.textOutput}>{outputText}</Text>
     </View>
   )
 }

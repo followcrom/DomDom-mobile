@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Linking, ScrollView, TouchableOpacity, Pressable, Button } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Linking, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { Ionicons, MaterialCommunityIcons, Foundation } from '@expo/vector-icons';
 import { Audio, InterruptionModeAndroid  } from 'expo-av';
 import styles from './styles/Styles';
 
 export default function SpeechPage({ navigation }) {
   const [sound, setSound] = useState();
   const [currentAudio, setCurrentAudio] = useState(null);
-  const [currentFileName, setCurrentFileName] = useState('Nothing playing');
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioFiles, setAudioFiles] = useState([]);
+const [isSoundLoaded, setIsSoundLoaded] = useState(false);
+const opacityValue = React.useRef(new Animated.Value(0.5)).current;
+const scaleValue = React.useRef(new Animated.Value(1)).current;
+let animation;
+
+
 
 
   useEffect(() => {
@@ -60,7 +65,38 @@ export default function SpeechPage({ navigation }) {
     fetchAudioFiles();
   }, []);
   
-  async function playSound() {
+
+  async function toggleSound() {
+    // If no sound is loaded, play a new sound
+    if (!isSoundLoaded && !sound) {
+      console.log("Attempting to play a new sound.");
+      
+      // Invoke the playSound logic here
+      await playNewSound();
+      
+      // After successfully loading and playing the sound
+      setIsSoundLoaded(true);
+      setIsPlaying(true);
+  
+    } else if (isSoundLoaded && sound) {
+      console.log("Attempting to toggle playback.");
+      
+      // If a sound is already loaded, toggle between pause and play
+      if (isPlaying) {
+        console.log('Pausing Sound');
+        await sound.pauseAsync();
+        setIsPlaying(false);
+      } else {
+        console.log('Resuming Sound');
+        await sound.playAsync();
+        setIsPlaying(true);
+      }
+    } else {
+      console.log("Sound object is not ready");
+    }
+  }
+  
+  async function playNewSound() {
     // If a sound is already playing, stop it
     if (sound) {
       const status = await sound.getStatusAsync();
@@ -77,19 +113,18 @@ export default function SpeechPage({ navigation }) {
     const randomIndex = Math.floor(Math.random() * audioFiles.length);
     const audioFile = audioFiles[randomIndex];
     setCurrentAudio(audioFile);
-    setCurrentFileName(audioFile.name);
   
     console.log('Loading New Sound');
-
-  // Load the sound with background playback
-  const { sound: newSound } = await Audio.Sound.createAsync(
-    { uri: audioFile.url },
-  );
-
+  
+    // Load the sound with background playback
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri: audioFile.url },
+    );
+  
     setSound(newSound);
   
     console.log('Playing New Sound');
-    await newSound.playAsync(); 
+    await newSound.playAsync();
     setIsPlaying(true);
   
     // Generate a random delay between 2 and 5 seconds
@@ -100,13 +135,12 @@ export default function SpeechPage({ navigation }) {
       if (status.didJustFinish) {
         setIsPlaying(false);
         // Set a delay before the next sound starts playing
-        setTimeout(playSound, delay);
+        setTimeout(playNewSound, delay);
       }
     });
   }
   
   
-
   async function replaySound() {
     if (sound) {
       console.log('Resetting Sound');
@@ -117,23 +151,6 @@ export default function SpeechPage({ navigation }) {
     }
   }
 
-  
-  
-
-  async function pauseSound() {
-    if (sound) {
-      if (isPlaying) {
-        console.log('Pausing Sound');
-        await sound.pauseAsync();
-        setIsPlaying(false);
-      } else {
-        console.log('Resuming Sound');
-        await sound.playAsync();
-        setIsPlaying(true);
-      }
-    }
-  }
-  
 
   async function stopSound() {
     if (sound) {
@@ -141,9 +158,62 @@ export default function SpeechPage({ navigation }) {
       await sound.stopAsync();
       await sound.unloadAsync();
       setSound(null);
+      setIsSoundLoaded(false);  // <-- Add this line
+      setIsPlaying(false);  // <-- Optionally, you can add this too if needed
       // Do not set currentAudio to null here
     }
   }
+  
+// pulse animation
+  const startPulsing = () => {
+    animation = Animated.loop(
+      Animated.parallel([
+        Animated.sequence([
+          Animated.timing(opacityValue, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: false,
+          }),
+          Animated.timing(opacityValue, {
+            toValue: 0.4,
+            duration: 1000,
+            useNativeDriver: false,
+          }),
+        ]),
+        Animated.sequence([
+          Animated.timing(scaleValue, {
+            toValue: 1.2,
+            duration: 1000,
+            useNativeDriver: false,
+          }),
+          Animated.timing(scaleValue, {
+            toValue: 1,
+            duration: 1000,
+            useNativeDriver: false,
+          }),
+        ]),
+      ])
+      );
+      animation.start();
+    };
+  
+  
+// pulse animation useEffect
+  useEffect(() => {
+    if (isPlaying) {
+      startPulsing();
+    } else {
+      if (animation) {
+        animation.stop();
+      }
+      // Reset the animated values to their initial states if needed
+      opacityValue.setValue(0.5);
+      scaleValue.setValue(1);
+    }
+  }, [isPlaying]);
+  
+
+  
 
   useEffect(() => {
     return sound
@@ -157,7 +227,6 @@ export default function SpeechPage({ navigation }) {
 
 
   // This effect will run when the screen is blurred
-
   useEffect(() => {
     // This is the event handler
     const handleBlur = async () => {
@@ -183,40 +252,36 @@ export default function SpeechPage({ navigation }) {
 
       <Text style={styles.title}>Momento Contento</Text>
 
-
-
-
-      {/* Only display when playing */}
-      {/* {isPlaying && <Text style={speechPageStyles.currPlay}>Currently playing: {currentFileName}</Text>} */}
-
       <View style={styles.transportButtonsRow}>
 
       <Ionicons style={styles.transportButtonsStyle}  name="play-skip-back-circle-outline" size={48} color="blue" onPress={replaySound} disabled={!currentAudio} />
 
       <Ionicons 
-    style={styles.transportButtonsStyle} 
-    name="play-circle-outline"
-    size={48} 
-    color={!!sound ? "darkgrey" : "green"}
-    onPress={playSound}
-    disabled={!!sound}
+  style={styles.transportButtonsStyle} 
+  name={isPlaying ? "pause-circle-outline" : "play-circle-outline"} 
+  size={48} 
+  color={isSoundLoaded ? (isPlaying ? "#a999d2" : "green") : "green"} 
+  onPress={toggleSound}
 />
-
-      {
-    isPlaying ?
-      <Ionicons style={styles.transportButtonsStyle} name="pause-circle-outline" size={48} color={sound ? "orange" : "grey"} onPress={pauseSound} />
-    :
-    <Ionicons style={styles.transportButtonsStyle} name="play-circle-outline" size={48} color={sound ? "orange" : "grey"} onPress={pauseSound} />
-  }
 
       <Ionicons style={styles.transportButtonsStyle}  name="stop-circle-outline" size={48} color="red" onPress={stopSound} />
 
-      <Ionicons style={styles.transportButtonsStyle}  name="play-skip-forward-circle-outline" size={48} color="blue" onPress={playSound} />
+      <Ionicons style={styles.transportButtonsStyle}  name="play-skip-forward-circle-outline" size={48} color="blue" onPress={playNewSound} />
 
       </View>
 
 
-      <Text style={speechPageStyles.currPlay}>Currently playing: {currentFileName}</Text>
+      {/* <Text style={speechPageStyles.currPlay}>Now playing: {currentFileName}</Text> */}
+
+      <Animated.View 
+  style={{
+    marginBottom: 30,
+    opacity: opacityValue, 
+    transform: [{ scale: scaleValue }],
+  }}
+>
+      <Foundation name="sound" size={100} color='#FF7F00' />
+      </Animated.View>
 
 
       <View style={speechPageStyles.buttonContainer}>
@@ -296,13 +361,10 @@ const speechPageStyles = StyleSheet.create({
 
 
   buttonContainer: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    justifyContent: 'center',
     alignItems: 'center',
     width: 300,
     marginBottom: 30,
-    backgroundColor: '#12abef',
+    backgroundColor: '#007BFF',
     borderColor: '#FFF',
     borderWidth: 2.5,
     borderRadius: 20,
@@ -311,16 +373,16 @@ const speechPageStyles = StyleSheet.create({
 
   buttonIcon: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
 
   buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
-    marginLeft: 10,
-    padding: 10,
+    marginLeft: 10, // Add some space between the icon and text
+    padding: 16,
   },
 
 

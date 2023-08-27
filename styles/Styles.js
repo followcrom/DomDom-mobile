@@ -9,7 +9,8 @@ export default StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+  
   },
 
   content: {
@@ -21,7 +22,7 @@ export default StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#08b0f9',
+    color: '#007BFF',
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'center',
@@ -87,7 +88,7 @@ export default StyleSheet.create({
 
   
   footerText: {
-    fontSize: 18,
+    fontSize: 24,
     color: '#fff',
     marginTop: 5,
     marginBottom: 5,
@@ -99,8 +100,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    borderColor: '#fff',
-    borderWidth: 2.5,
     backgroundColor: '#f39b51'
   },
 });
