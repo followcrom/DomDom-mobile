@@ -357,7 +357,7 @@ const speechPageStyles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60, // Radius of the circle (half of the diameter)
-    borderColor: '#FF7F00',
+    borderColor: '#CCC',
     borderWidth: 2,
     backgroundColor: '#FFF',
     justifyContent: 'center',
