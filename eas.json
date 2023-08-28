@@ -1,7 +1,4 @@
 {
-  "cli": {
-    "version": ">= 3.15.1"
-  },
   "build": {
     "development": {
       "developmentClient": true,
@@ -26,5 +23,9 @@
         "serviceAccountKeyPath": "../../RanDomWisDom (Mobile)/keys/pc-api-5317464024462469704-19-01c8996118c0.json"
       }
     }
+  },
+  "update": {
+    "branch": "main",
+    "runtimeVersion": "49.0.0"
   }
 }

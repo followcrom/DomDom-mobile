@@ -273,15 +273,18 @@ let animation;
 
       {/* <Text style={speechPageStyles.currPlay}>Now playing: {currentFileName}</Text> */}
 
-      <Animated.View 
-  style={{
-    marginBottom: 30,
-    opacity: opacityValue, 
-    transform: [{ scale: scaleValue }],
-  }}
->
-      <Foundation name="sound" size={100} color='#FF7F00' />
-      </Animated.View>
+      <View style={speechPageStyles.animationContainer}>
+
+  <Animated.View 
+    style={{
+      opacity: opacityValue, 
+      transform: [{ scale: scaleValue }],
+    }}
+  >
+    <Foundation name="sound" size={100} color='#FF7F00' />
+  </Animated.View>
+</View>
+
 
 
       <View style={speechPageStyles.buttonContainer}>
@@ -350,11 +353,16 @@ const speechPageStyles = StyleSheet.create({
   },
 
 
-  currPlay: {
-    color: '#FF7F00',
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
+  animationContainer: {
+    width: 120,
+    height: 120,
+    borderRadius: 60, // Radius of the circle (half of the diameter)
+    borderColor: '#FF7F00',
+    borderWidth: 2,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
   },
 
 
