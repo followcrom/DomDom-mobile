@@ -10,6 +10,8 @@ export default function Meditations({ navigation }) {
     const [playbackPosition, setPlaybackPosition] = useState(0);
     const [playbackDuration, setPlaybackDuration] = useState(0);
     const progress = playbackDuration > 0 ? (playbackPosition / playbackDuration) * 100 : 0;
+    const [activeTab, setActiveTab] = React.useState(0);
+    const tabs = ['Short', 'Medium', 'Long'];
     const [audioFiles, setAudioFiles] = useState([]);
     const [currentMeditationName, setCurrentMeditationName] = useState('Please select a meditation');
 
@@ -31,21 +33,61 @@ useEffect(() => {
     setAudioMode();
 }, []);
 
-const fetchAudioFiles = async () => {
-    try {
-        const url = 'https://followcrom.online/meditations/meditations.json?' + new Date().getTime();
-        const response = await fetch(url);
 
-        if (!response.ok) {
-            console.error('HTTP error', response.status);
-        } else {
-            const data = await response.json();
-            setAudioFiles(data);
-        }
+const TabBar = ({ tabs, activeTab, setActiveTab }) => {
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around',
+      padding: 5}}>
+        {tabs.map((tab, index) => (
+          <TouchableOpacity key={index} onPress={() => setActiveTab(index)}>
+<Text 
+  style={{ 
+    color: activeTab === index ? '#FF7F00' : 'grey',
+    borderBottomWidth: activeTab === index ? 2 : 0,  // Add this line
+    borderBottomColor: activeTab === index ? '#FF7F00' : 'transparent',  // Add this line
+  }}
+>
+  {tab}
+</Text>
+
+          </TouchableOpacity>
+        ))}
+      </View>
+    );
+  };
+
+  React.useEffect(() => {
+    fetchAudioFiles();
+  }, [activeTab]);
+  
+
+  const fetchAudioFiles = async () => {
+    try {
+      let url = 'https://followcrom.online/meditations/meditations_short.json?' + new Date().getTime();
+      
+      // Modify the URL based on the active tab
+      if (activeTab === 1) {
+        url = 'https://followcrom.online/meditations/meditations_medium.json?' + new Date().getTime();
+      }
+  
+      if (activeTab === 2) {
+        url = 'https://followcrom.online/meditations/meditations_long.json?' + new Date().getTime();
+      }
+  
+      const response = await fetch(url);
+  
+      if (!response.ok) {
+        console.error('HTTP error', response.status);
+      } else {
+        const data = await response.json();
+        setAudioFiles(data);
+      }
     } catch (err) {
-        console.error('Fetch error', err);
+      console.error('Fetch error', err);
     }
-};
+  };
+  
+  
 
       
       useEffect(() => {
@@ -171,6 +213,9 @@ const fetchAudioFiles = async () => {
         <View contentContainerStyle={MedPageStyles.container}>
             <Text style={styles.title}>Meditations</Text>
 
+            <View>
+      <TabBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+
 
             <FlatList
   contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 8 }}
@@ -191,7 +236,7 @@ const fetchAudioFiles = async () => {
   )}
 />
 
-
+</View>
 
 <Text style={MedPageStyles.currPlay}>{currentMeditationName}</Text>
 

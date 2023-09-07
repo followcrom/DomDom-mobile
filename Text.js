@@ -47,9 +47,6 @@ const showToast = () => {
 <Image
       source={require('./images/random_wisdom_landscape.png')} style={textPageStyles.image} />
 
-
-      <Text style={styles.title}>Put it into Words</Text>
-
       <View style={styles.textContainer} onTouchEnd={showToast}>
       <Text style={styles.textOutput}>{outputText}</Text>
     </View>
@@ -86,7 +83,8 @@ const textPageStyles = StyleSheet.create({
   image: {
     height: 200,
     resizeMode: 'contain',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    marginBottom: 5,
 },
 
   buttonContainer: {

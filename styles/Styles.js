@@ -45,7 +45,7 @@ export default StyleSheet.create({
 
   textOutput: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     padding: 10,
   },
 

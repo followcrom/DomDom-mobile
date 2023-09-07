@@ -23,22 +23,31 @@ export default function App() {
         <Stack.Screen
           name="Text"
           component={Text}
-          options={{ headerShown: true }}
+          options={{ 
+            headerShown: true,
+            headerStyle: { height: 40 },
+          }}
         />
         <Stack.Screen
           name="Speech"
           component={Speech}
-          options={{ headerShown: true }}
+          options={{ headerShown: true,
+            headerStyle: { height: 40 },
+          }}
         />
         <Stack.Screen
           name="Search"
           component={Search}
-          options={{ headerShown: true }}
+          options={{ headerShown: true,
+            headerStyle: { height: 40 },
+          }}
         />
           <Stack.Screen
           name="Meditations"
           component={Mediatations}
-          options={{ headerShown: true }}
+          options={{ headerShown: true,
+            headerStyle: { height: 40 },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

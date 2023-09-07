@@ -45,9 +45,13 @@ let animation;
     Linking.openURL('https://followcrom.online/contact/contact.php');
   }
 
+  const openLi = () => {
+    Linking.openURL('https://www.linkedin.com/in/followCrom/');
+  }
+
   const fetchAudioFiles = async () => {
     try {
-      const url = 'https://domdom-audio.s3.eu-west-2.amazonaws.com/audioFiles.json?' + new Date().getTime();
+      const url = 'https://followcrom.online/moments/moments.json?' + new Date().getTime();
       const response = await fetch(url);
         
       if (!response.ok) {
@@ -127,8 +131,7 @@ let animation;
     await newSound.playAsync();
     setIsPlaying(true);
   
-    // Generate a random delay between 2 and 5 seconds
-    const delay = Math.floor(Math.random() * 3 + 2) * 1000;
+    const delay = 2000;
   
     // Set up a callback for when the sound finishes playing
     newSound.setOnPlaybackStatusUpdate(async (status) => {
@@ -281,11 +284,14 @@ let animation;
       transform: [{ scale: scaleValue }],
     }}
   >
-    <Foundation name="sound" size={100} color='#FF7F00' />
+    <Foundation name="sound" size={80} color='#FF7F00' />
   </Animated.View>
 </View>
 
 
+<View style={speechPageStyles.divider}></View>
+
+<Text style={speechPageStyles.subtitle}>Try a meditation:</Text>
 
       <View style={speechPageStyles.buttonContainer}>
         <TouchableOpacity
@@ -298,6 +304,8 @@ let animation;
       </View>
 
 
+      <View style={speechPageStyles.divider}></View>
+
       <Text style={speechPageStyles.subtitle}>Visit us online:</Text>
       <View style={speechPageStyles.iconButtonsRow}>
 
@@ -307,7 +315,7 @@ let animation;
   }} 
 />
 
-<Ionicons style={speechPageStyles.iconButtons} name="globe-outline" size={38} color="#12abef"   onPress={() => {
+<Ionicons style={speechPageStyles.iconButtons} name="globe-outline" size={38} color="blue"   onPress={() => {
     console.log('Go to followcrom.online');
     openfC();
   }} 
@@ -319,21 +327,30 @@ let animation;
   }} 
 />
 
+<Ionicons style={speechPageStyles.iconButtons} name="logo-linkedin" size={38} color="#12abef"   onPress={() => {
+    console.log('Contact followcrom');
+    openLi();
+  }} 
+/>
+
 </View>
 
-<Text style={speechPageStyles.subtitle}>Technologies:</Text>
+<View style={speechPageStyles.divider}></View>
+
+<Text style={speechPageStyles.subtitle}>Technologies (unclickable):</Text>
+
 
 <View style={speechPageStyles.iconButtonsRow}>
 
-<Ionicons style={speechPageStyles.iconButtons}  name="logo-nodejs" size={32} color="blue" onPress={() => console.log('Node icon pressed')} />
+<Ionicons style={speechPageStyles.iconButtons}  name="logo-nodejs" size={28} color="blue" />
 
-<Ionicons style={speechPageStyles.iconButtons} name="logo-react" size={32} color="purple" onPress={() => console.log('React icon pressed')} />
+<Ionicons style={speechPageStyles.iconButtons} name="logo-react" size={28} color="purple" />
 
-<Ionicons style={speechPageStyles.iconButtons} name="logo-javascript" size={32} color="green" onPress={() => console.log('JS icon pressed')} />
+<Ionicons style={speechPageStyles.iconButtons} name="logo-javascript" size={28} color="green" />
 
-<MaterialCommunityIcons style={speechPageStyles.iconButtons} name="aws" size={32} color="red" onPress={() => console.log('AWS icon pressed')} />
+<MaterialCommunityIcons style={speechPageStyles.iconButtons} name="aws" size={28} color="red" />
 
-<MaterialCommunityIcons style={speechPageStyles.iconButtons} name="lambda" size={32} color="orange" onPress={() => console.log('Lambda icon pressed')} />
+<MaterialCommunityIcons style={speechPageStyles.iconButtons} name="lambda" size={28} color="orange" />
 
 </View>
 
@@ -354,11 +371,9 @@ const speechPageStyles = StyleSheet.create({
 
 
   animationContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60, // Radius of the circle (half of the diameter)
-    borderColor: '#CCC',
-    borderWidth: 2,
+    width: 100,
+    height: 100,
+    borderRadius: 50, // Radius of the circle (half of the diameter)
     backgroundColor: '#FFF',
     justifyContent: 'center',
     alignItems: 'center',
@@ -371,6 +386,7 @@ const speechPageStyles = StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     width: 300,
+    marginTop: 10,
     marginBottom: 30,
     backgroundColor: '#007BFF',
     borderColor: '#FFF',
@@ -402,6 +418,16 @@ const speechPageStyles = StyleSheet.create({
     textAlign: 'center',
   },
 
+
+  divider: {
+  borderBottomColor: '#007BFF',
+  borderBottomWidth: 2,
+  alignSelf: 'stretch',
+  marginLeft: '10%',
+  width: '80%',
+  marginTop: 10,
+  marginBottom: 10,
+},
 
   iconButtonsRow: {
     flexDirection: 'row',

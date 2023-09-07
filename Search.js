@@ -42,7 +42,6 @@ export default function SearchPage() {
                     setSearchResults(responseBody.Items);
                     setCurrentIndex(0); // Reset currentIndex to 0
                     setOutputText(responseBody.Items[0].phrase); // Show the first result
-                    console.log("ID:", responseBody.Items[0].id);
                     setPhraseId(responseBody.Items[0].id);
                 } else {
                     setSearchResults([]);
