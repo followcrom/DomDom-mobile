@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     env:
@@ -27,5 +27,5 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Expo EAS Build
-        run: eas build --platform android --profile preview --non-interactive
+      - name: Expo EAS Update
+        run: eas update --branch release --message "Update from GitHub Actions"

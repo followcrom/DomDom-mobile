@@ -1,365 +1,149 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet, ToastAndroid } from 'react-native';
-import { Audio, InterruptionModeAndroid  } from 'expo-av';
-import styles from './styles/Styles';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+} from "react-native";
 
 export default function Meditations({ navigation }) {
-    const [sound, setSound] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [playbackPosition, setPlaybackPosition] = useState(0);
-    const [playbackDuration, setPlaybackDuration] = useState(0);
-    const progress = playbackDuration > 0 ? (playbackPosition / playbackDuration) * 100 : 0;
-    const [activeTab, setActiveTab] = React.useState(0);
-    const tabs = ['Short', 'Medium', 'Long'];
-    const [audioFiles, setAudioFiles] = useState([]);
-    const [currentMeditationName, setCurrentMeditationName] = useState('Please select a meditation');
+  const [activeTab, setActiveTab] = useState(0);
+  const tabs = ["Short", "Medium", "Long"];
+  const [audioFiles, setAudioFiles] = useState([]);
 
-
-
-
-useEffect(() => {
-    async function setAudioMode() {
-      await Audio.setAudioModeAsync({
-        staysActiveInBackground: true,
-        interruptionModeAndroid: InterruptionModeAndroid.DoNotMix,
-        playsInSilentModeAndroid: true,
-        shouldDuckAndroid: true,
-        playThroughEarpieceAndroid: false,
-      });      
-      
-    }
-
-    setAudioMode();
-}, []);
-
-
-const TabBar = ({ tabs, activeTab, setActiveTab }) => {
+  const TabBar = ({ tabs, activeTab, setActiveTab }) => {
     return (
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around',
-      padding: 5}}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-around",
+          padding: 5,
+        }}
+      >
         {tabs.map((tab, index) => (
           <TouchableOpacity key={index} onPress={() => setActiveTab(index)}>
-<Text 
-  style={{ 
-    color: activeTab === index ? '#FF7F00' : 'grey',
-    borderBottomWidth: activeTab === index ? 2 : 0,  // Add this line
-    borderBottomColor: activeTab === index ? '#FF7F00' : 'transparent',  // Add this line
-  }}
->
-  {tab}
-</Text>
-
+            <Text
+              style={{
+                color: activeTab === index ? "#FF7F00" : "grey",
+                borderBottomWidth: activeTab === index ? 2 : 0,
+                borderBottomColor:
+                  activeTab === index ? "#FF7F00" : "transparent",
+                fontSize: 15,
+              }}
+            >
+              {tab}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
     );
   };
 
-  React.useEffect(() => {
-    fetchAudioFiles();
-  }, [activeTab]);
-  
-
   const fetchAudioFiles = async () => {
     try {
-      let url = 'https://followcrom.online/meditations/meditations_short.json?' + new Date().getTime();
-      
-      // Modify the URL based on the active tab
+      let url =
+        "https://followcrom.online/meditations/meditations_short.json?" +
+        new Date().getTime();
+
       if (activeTab === 1) {
-        url = 'https://followcrom.online/meditations/meditations_medium.json?' + new Date().getTime();
+        url =
+          "https://followcrom.online/meditations/meditations_medium.json?" +
+          new Date().getTime();
       }
-  
+
       if (activeTab === 2) {
-        url = 'https://followcrom.online/meditations/meditations_long.json?' + new Date().getTime();
+        url =
+          "https://followcrom.online/meditations/meditations_long.json?" +
+          new Date().getTime();
       }
-  
+
       const response = await fetch(url);
-  
+
       if (!response.ok) {
-        console.error('HTTP error', response.status);
+        console.error("HTTP error", response.status);
       } else {
         const data = await response.json();
         setAudioFiles(data);
       }
     } catch (err) {
-      console.error('Fetch error', err);
+      console.error("Fetch error", err);
     }
   };
-  
-  
 
-      
-      useEffect(() => {
-        fetchAudioFiles();
-      }, []);
+  useEffect(() => {
+    fetchAudioFiles();
+  }, [activeTab]);
 
-      async function playSelectedSound(url, name) {
-        setCurrentMeditationName(name);
-    
-        // If a sound is already playing, stop and unload it first
-        if (sound) {
-            await sound.unloadAsync();
-            setSound(null);
-        }
-    
-        // Load the selected sound
-        const { sound: newSound } = await Audio.Sound.createAsync(
-            { uri: url }
-        );
-        setSound(newSound);
-    
-        // Monitor when audio playback completes
-        newSound.setOnPlaybackStatusUpdate(status => {
-            if (status.didJustFinish) {
-                setIsPlaying(false);
-            }
-            if (status.isLoaded) {
-                setPlaybackPosition(status.positionMillis);
-                setPlaybackDuration(status.durationMillis);
-            }      
-        });
-    
-        // Play the loaded sound
-        await newSound.playAsync();
-        setIsPlaying(true);
-    }
-    
-    
+  const handlePress = (url, name) => {
+    console.log(
+      `Navigating to MeditationPlayer with URL: ${url} and name: ${name}`
+    );
+    navigation.navigate("MeditationPlayer", { audioUrl: url, title: name });
+  };
 
-    useEffect(() => {
-    }, [playbackPosition, playbackDuration]);
+  return (
+    <View contentContainerStyle={medPageStyles.container}>
+      <Text style={medPageStyles.title}>Please choose a meditation:</Text>
 
+      <View>
+        <TabBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
-    async function togglePlayback() {   
-        if (isPlaying) {
-            await sound.pauseAsync();
-            setIsPlaying(false);
-        } else {
-            if (!sound) {
-                showToast();
-                return;
-            }
-            await sound.playAsync();
-            setIsPlaying(true);
-        }
-    }
-    
-    
-    
-
-    async function stopPlayback() {
-        await sound.stopAsync();
-        setIsPlaying(false);
-    }
-    
-
-    async function skipBackward() {
-        if (sound) {
-            const status = await sound.getStatusAsync();
-            const newPosition = Math.max(0, status.positionMillis - 10000);
-            await sound.setPositionAsync(newPosition);
-        }
-    }
-    
-    async function skipForward() {
-        if (sound) {
-            const status = await sound.getStatusAsync();
-            const newPosition = Math.min(status.durationMillis, status.positionMillis + 10000);
-            await sound.setPositionAsync(newPosition);
-        }
-    }
-    
-
-    function formatTime(milliseconds) {
-        const totalSeconds = Math.floor(milliseconds / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-    
-        const paddedMinutes = String(minutes).padStart(2, '0');
-        const paddedSeconds = String(seconds).padStart(2, '0');
-    
-        return `${paddedMinutes}:${paddedSeconds}`;
-    }
-
-    
-
-    const showToast = () => {
-        ToastAndroid.showWithGravityAndOffset(
-          "Please select a meditation first",
-          ToastAndroid.LONG,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-      };
-      
-
-      useEffect(() => {
-        // This is the event handler
-        const handleBlur = () => {
-          if (sound) {
-            sound.stopAsync();
-          }
-        }; 
-        // Add the event listener
-        const unsubscribe = navigation.addListener('blur', handleBlur);
-        // Return the cleanup function
-        return unsubscribe;
-      }, [sound, navigation]);
-
-
-    return (
-        <View contentContainerStyle={MedPageStyles.container}>
-            <Text style={styles.title}>Meditations</Text>
-
-            <View>
-      <TabBar tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
-
-
-            <FlatList
-  contentContainerStyle={{ paddingVertical: 5, paddingHorizontal: 8 }}
-  data={audioFiles}
-  keyExtractor={(item) => item.name}
-  renderItem={({ item, index }) => (
-    <TouchableOpacity 
-      style={[
-        MedPageStyles.audioListItem, 
-        { backgroundColor: index % 2 === 0 ? '#e0e0e0' : 'white' } // Alternate background colors
-      ]}
-      accessible={true} 
-      accessibilityLabel={`Play sound ${item.name}`}
-      onPress={() => playSelectedSound(item.url, item.name)}
-    >
-      <Text style={MedPageStyles.listItems}>{item.name}</Text>
-    </TouchableOpacity>
-  )}
-/>
-
-</View>
-
-<Text style={MedPageStyles.currPlay}>{currentMeditationName}</Text>
-
-            <View style={MedPageStyles.buttonRow}>
-
-
-<MaterialCommunityIcons 
-    style={styles.transportButtonsStyle} 
-    name="step-backward" 
-    size={36} 
-    color={sound ? "blue" : "grey"} 
-    onPress={skipBackward} 
-    disabled={!sound}
-/>
-
-
-{isPlaying 
-    ? <Ionicons style={styles.transportButtonsStyle} name="pause-circle-outline" size={48} color="orange" onPress={togglePlayback} />
-    : <Ionicons 
-        style={styles.transportButtonsStyle} 
-        name="play-circle-outline" 
-        size={48} 
-        color={sound ? "green" : "grey"}
-        onPress={togglePlayback}
-      />
+        <FlatList
+          contentContainerStyle={medPageStyles.listContainer}
+          data={audioFiles}
+          keyExtractor={(item) => item.name}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              style={[
+                medPageStyles.listItem,
+                { backgroundColor: index % 2 === 0 ? "#e0e0e0" : "white" }, // Alternate background colors
+              ]}
+              accessible={true}
+              accessibilityLabel={`Play sound ${item.name}`}
+              onPress={() => handlePress(item.url, item.name)}
+            >
+              <Text style={medPageStyles.listItemText}>{item.name}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    </View>
+  );
 }
 
+// Corresponding styles
+const medPageStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
 
-<Ionicons 
-    style={styles.transportButtonsStyle}  
-    name="stop-circle-outline" 
-    size={48} 
-    color={sound ? "red" : "grey"} 
-    onPress={stopPlayback} 
-    disabled={!sound}
-/>
+  title: {
+    fontSize: 20,
+    fontWeight: "normal",
+    color: "#000",
+    marginTop: 20,
+    marginBottom: 20,
+    textAlign: "center",
+  },
 
+  listContainer: {
+    paddingVertical: 5,
+    paddingHorizontal: 0,
+  },
 
-<MaterialCommunityIcons 
-    style={styles.transportButtonsStyle} 
-    name="step-forward" 
-    size={36} 
-    color={sound ? "blue" : "grey"} 
-    onPress={skipForward} 
-    disabled={!sound}
-/>
-</View>
+  listItem: {
+    paddingVertical: 16, // Increase padding for better touch target size
+    paddingHorizontal: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
 
-            {/* Progress Bar */}
-            <View style={MedPageStyles.outerProgressBarContainer}>
-    <View style={MedPageStyles.progressBarContainer}>
-                <View style={{ 
-                    height: 20,
-                    borderRadius: 10,
-                    width: `${progress}%`,
-                    backgroundColor: '#12abef',
-                }} />
-            </View></View>
-
-            <Text style={MedPageStyles.currPlay}>
-    {formatTime(playbackPosition)} / {formatTime(playbackDuration)}
-</Text>
-
-
-            </View>
-    );
-            }
-    
-    // Corresponding styles
-    const MedPageStyles = StyleSheet.create({
-        container: {
-            flex: 1,
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-        },
-
-        audioListItem: {
-            paddingVertical: 16, // Increase padding for better touch target size
-            paddingHorizontal: 10,
-            borderBottomWidth: 1, 
-            borderBottomColor: '#ccc'
-          },
-          
-          listItems: {
-            textAlign: 'center',
-            color: '#12abef',
-            fontSize: 20
-          },
-
-        currPlay: {
-            textAlign: 'center',
-            fontWeight: 'bold',
-            color: '#FF7F00',
-            fontSize: 18,
-            paddingVertical: 10
-          },
-
-        buttonRow: {
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: 20
-        },
-        buttonStyle: {
-            marginHorizontal: 10
-        },
-
-        outerProgressBarContainer: {
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '100%',
-        },
-        progressBarContainer: {
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            width: '80%',
-            height: 24,
-            backgroundColor: 'white',
-            borderColor: '#007BFF',
-            borderWidth: 2,
-            borderRadius: 20,
-            overflow: 'hidden'
-        },
-    });
-    
+  listItemText: {
+    textAlign: "center",
+    color: "#12abef",
+    fontSize: 20,
+  },
+});
