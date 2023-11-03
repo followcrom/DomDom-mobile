@@ -156,81 +156,83 @@ export default function MeditationPlayer({ route, navigation }) {
         <View style={playerStyles.closeContainer}>
           <Ionicons
             name="close-circle-outline"
-            size={36}
+            size={40}
             color="white"
             onPress={() => navigation.goBack()}
           />
         </View>
         <Image
-          source={require("./images/random_wisdom_landscape.png")}
+          source={require("./images/random_wisdom_landscape.jpg")}
           style={playerStyles.image}
         />
 
-        {isLoading && <ActivityIndicator size="large" color="#0000ff" />}
+        {isLoading && <ActivityIndicator size="large" color="#fff" />}
 
         <Text style={playerStyles.title}>{currentMeditationName}</Text>
 
-        <View style={playerStyles.buttonRow}>
-          <MaterialCommunityIcons
-            style={styles.transportButtonsStyle}
-            name="step-backward"
-            size={36}
-            color="blue"
-            onPress={skipBackward}
-          />
+        <View style={playerStyles.transportContainer}>
+          <View style={playerStyles.buttonRow}>
+            <MaterialCommunityIcons
+              style={styles.transportButtonsStyle}
+              name="step-backward"
+              size={36}
+              color="blue"
+              onPress={skipBackward}
+            />
 
-          {isPlaying ? (
+            {isPlaying ? (
+              <Ionicons
+                style={styles.transportButtonsStyle}
+                name="pause-circle-outline"
+                size={48}
+                color="orange"
+                onPress={togglePlayback}
+              />
+            ) : (
+              <Ionicons
+                style={styles.transportButtonsStyle}
+                name="play-circle-outline"
+                size={48}
+                color="green"
+                onPress={togglePlayback}
+              />
+            )}
+
             <Ionicons
               style={styles.transportButtonsStyle}
-              name="pause-circle-outline"
+              name="stop-circle-outline"
               size={48}
-              color="orange"
-              onPress={togglePlayback}
+              color="red"
+              onPress={stopPlayback}
             />
-          ) : (
-            <Ionicons
+
+            <MaterialCommunityIcons
               style={styles.transportButtonsStyle}
-              name="play-circle-outline"
-              size={48}
-              color="green"
-              onPress={togglePlayback}
-            />
-          )}
-
-          <Ionicons
-            style={styles.transportButtonsStyle}
-            name="stop-circle-outline"
-            size={48}
-            color="red"
-            onPress={stopPlayback}
-          />
-
-          <MaterialCommunityIcons
-            style={styles.transportButtonsStyle}
-            name="step-forward"
-            size={36}
-            color="blue"
-            onPress={skipForward}
-          />
-        </View>
-
-        {/* Progress Bar */}
-        <View style={playerStyles.outerProgressBarContainer}>
-          <View style={playerStyles.progressBarContainer}>
-            <View
-              style={{
-                height: 20,
-                borderRadius: 10,
-                width: `${progress}%`,
-                backgroundColor: "#12abef",
-              }}
+              name="step-forward"
+              size={36}
+              color="blue"
+              onPress={skipForward}
             />
           </View>
-        </View>
 
-        <Text style={playerStyles.currPlay}>
-          {formatTime(playbackPosition)} / {formatTime(playbackDuration)}
-        </Text>
+          {/* Progress Bar */}
+          <View style={playerStyles.outerProgressBarContainer}>
+            <View style={playerStyles.progressBarContainer}>
+              <View
+                style={{
+                  height: 20,
+                  borderRadius: 10,
+                  width: `${progress}%`,
+                  backgroundColor: "#12abef",
+                }}
+              />
+            </View>
+          </View>
+
+          <Text style={playerStyles.currPlay}>
+            {formatTime(playbackPosition)} / {formatTime(playbackDuration)}
+          </Text>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -250,6 +252,12 @@ const playerStyles = StyleSheet.create({
     height: "100%",
   },
 
+  transportContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white
+    borderRadius: 10,
+    margin: 20,
+  },
+
   closeContainer: {
     alignItems: "center",
     marginTop: 10,
@@ -261,6 +269,7 @@ const playerStyles = StyleSheet.create({
     height: 200,
     resizeMode: "contain",
     alignSelf: "center",
+    borderRadius: 2,
     marginBottom: 5,
   },
 

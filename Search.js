@@ -98,6 +98,7 @@ export default function SearchPage() {
       <TextInput
         style={searchPageStyles.input}
         value={searchQuery}
+        accessibilityLabel="Enter your search term here"
         onChangeText={(text) => setSearchQuery(text.toLowerCase())}
         autoCorrect={false}
         autoCapitalize="none"
@@ -161,10 +162,15 @@ const searchPageStyles = StyleSheet.create({
 
   input: {
     width: "80%",
+    height: 56,
     borderColor: "gray",
     borderWidth: 1,
     margin: 10,
-    padding: 5,
+    // padding: 5,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 8,
+    paddingRight: 8,
   },
 
   textContainer: {

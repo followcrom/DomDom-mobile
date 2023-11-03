@@ -26,28 +26,27 @@ export default function App() {
           component={Text}
           options={{
             headerShown: true,
-            headerStyle: { height: 40 },
           }}
         />
         <Stack.Screen
           name="Speech"
           component={Speech}
-          options={{ headerShown: true, headerStyle: { height: 40 } }}
+          options={{ headerShown: true }}
         />
         <Stack.Screen
           name="Search"
           component={Search}
-          options={{ headerShown: true, headerStyle: { height: 40 } }}
+          options={{
+            headerShown: true,
+            // headerStyle: { height: 40 },
+            // backgroundColor: "#f4511e"
+          }}
         />
         <Stack.Screen
           name="Meditations"
           component={Mediatations}
           options={{
             headerShown: true,
-            headerStyle: {
-              height: 40,
-              // backgroundColor: "#f4511e"
-            },
           }}
         />
         <Stack.Screen

@@ -86,7 +86,7 @@ export default StyleSheet.create({
 
   footerText: {
     fontSize: 24,
-    color: "#fff",
+    color: "#000",
     marginTop: 5,
     marginBottom: 5,
     textAlign: "center",
@@ -97,6 +97,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#f39b51",
+    backgroundColor: "#FFF",
+    // "#f39b51"
   },
 });

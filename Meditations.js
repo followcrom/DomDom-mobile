@@ -22,14 +22,18 @@ export default function Meditations({ navigation }) {
         }}
       >
         {tabs.map((tab, index) => (
-          <TouchableOpacity key={index} onPress={() => setActiveTab(index)}>
+          <TouchableOpacity
+            key={index}
+            onPress={() => setActiveTab(index)}
+            accessibilityLabel={`Switch to ${tab} tab`}
+          >
             <Text
               style={{
-                color: activeTab === index ? "#FF7F00" : "grey",
+                color: activeTab === index ? "#FF4500" : "grey",
                 borderBottomWidth: activeTab === index ? 2 : 0,
                 borderBottomColor:
                   activeTab === index ? "#FF7F00" : "transparent",
-                fontSize: 15,
+                fontSize: 16,
               }}
             >
               {tab}

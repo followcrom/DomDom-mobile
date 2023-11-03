@@ -71,7 +71,7 @@ export default function TextPage({ navigation }) {
   return (
     <ScrollView contentContainerStyle={textPageStyles.container}>
       <Image
-        source={require("./images/random_wisdom_landscape.png")}
+        source={require("./images/random_wisdom_landscape.jpg")}
         style={textPageStyles.image}
       />
 
@@ -126,6 +126,7 @@ const textPageStyles = StyleSheet.create({
     height: 200,
     resizeMode: "contain",
     alignSelf: "center",
+    borderRadius: 2,
     marginBottom: 5,
   },
 
@@ -138,7 +139,7 @@ const textPageStyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "bold",
     color: "#007BFF",
     marginTop: 10,

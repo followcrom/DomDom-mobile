@@ -27,5 +27,8 @@ jobs:
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
+      # - name: Expo EAS Update
+      #   run: eas update --branch release --message "Update from GitHub Actions"
+
       - name: Expo EAS Update
-        run: eas update --branch release --message "Update from GitHub Actions"
+        run: eas update --branch release --channel release --message "${{ github.event.head_commit.message }}"
