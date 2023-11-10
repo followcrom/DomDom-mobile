@@ -10,8 +10,7 @@ Brief, impactful quotes from celebrated philosophers and mindful minds.
 **Speech:**  
 10-minute meditations filled with practical advice, offering actionable wisdom that stands the test of time.
 
-⚡ Get the app on the Play store:  
-[https://play.google.com/store/apps/details?id=online.followcrom.RandomWisdom]
+⚡ [Get the app on the Play store](https://play.google.com/store/apps/details?id=online.followcrom.RandomWisdom) ⚡
 
 <div align="center">
   <img src="https://followcrom.online/images/random_wisdom.png" width="400" alt="Random Wisdom">
