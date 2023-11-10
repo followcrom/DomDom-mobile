@@ -11,6 +11,7 @@ Brief, impactful quotes from celebrated philosophers and mindful minds.
 10-minute meditations filled with practical advice, offering actionable wisdom that stands the test of time.
 
 ⚡ Get the app on the Play store:
+
 [https://play.google.com/store/apps/details?id=online.followcrom.RandomWisdom]
 
 <div align="center">
