@@ -4,18 +4,17 @@
 
 **Random Wisdom** is an Android application, built with React Native and Expo. The app has both a text and a speech feature.
 
-**Text:**
+**Text:**  
 Brief, impactful quotes from celebrated philosophers and mindful minds.
 
-**Speech:**
+**Speech:**  
 10-minute meditations filled with practical advice, offering actionable wisdom that stands the test of time.
 
-⚡ Get the app on the Play store:
-
+⚡ Get the app on the Play store:  
 [https://play.google.com/store/apps/details?id=online.followcrom.RandomWisdom]
 
 <div align="center">
-  <img src="https://followcrom.online/images/random_wisdom.png" width="400" alt="Random Wisdom>
+  <img src="https://followcrom.online/images/random_wisdom.png" width="400" alt="Random Wisdom">
 </div>
 
 ## Features
