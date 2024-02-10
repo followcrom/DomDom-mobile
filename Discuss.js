@@ -38,6 +38,13 @@ export default function TestPage() {
     };
     Dimensions.addEventListener("change", handleOrientationChange);
 
+    // Check if apiKey is available
+    if (!apiKey) {
+      setTextOutput("API Key is missing.");
+    } else {
+      setTextOutput("Loading...");
+    }
+
     // Check if OpenAI request has already been made
     if (!openAIRequested) {
       const additionalText =
