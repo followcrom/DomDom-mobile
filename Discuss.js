@@ -31,10 +31,10 @@ export default function TestPage() {
   useEffect(() => {
     if (apiKey === undefined) {
       // If apiKey is undefined, it might still be loading
-      setTextOutput("Loading...");
+      setOutputText("Loading...");
     } else if (!apiKey) {
       // If apiKey is explicitly falsey but not undefined, it's missing
-      setTextOutput("API Key is missing.");
+      setOutputText("API Key is missing.");
     }
     // You might not need an 'else' clause if "Loading..." is the default state
   }, [apiKey]); // Depend on apiKey to re-run this effect when apiKey changes
