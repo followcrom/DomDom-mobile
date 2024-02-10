@@ -86,7 +86,7 @@ export default function TestPage() {
             Authorization: `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-3.5-turbo-0125",
             messages: messages,
             max_tokens: 250,
             temperature: 0.7,
@@ -158,7 +158,7 @@ export default function TestPage() {
       <View style={discussPageStyles.inputContainer}>
         <TextInput
           style={discussPageStyles.input}
-          placeholder="What do you think?"
+          placeholder="Response here..."
           value={userInput}
           onChangeText={(text) => setUserInput(text)}
           placeholderTextColor="#A9A9A9"

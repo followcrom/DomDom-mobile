@@ -16,7 +16,6 @@ export default {
     updates: {
       fallbackToCacheTimeout: 0,
       checkAutomatically: "ON_LOAD",
-      url: "https://u.expo.dev/8f510697-9131-48d2-93a3-7155d99ded95",
     },
     assetBundlePatterns: ["**/*"],
     android: {
@@ -41,6 +40,6 @@ export default {
       },
       openAiApiKey: process.env.OPENAI_API_KEY,
     },
-    runtimeVersion: "1.0.0",
+    runtimeVersion: "1.1.1",
   },
 };
