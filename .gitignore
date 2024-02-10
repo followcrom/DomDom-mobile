@@ -17,3 +17,6 @@ web-build/
 .metro-health-check*
 
 eas.json
+
+# .env files should be ignored in version control
+.env

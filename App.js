@@ -9,6 +9,7 @@ import Search from "./Search";
 import Speech from "./Speech";
 import Mediatations from "./Meditations";
 import MeditationPlayer from "./MeditationPlayer";
+import Discuss from "./Discuss";
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,13 @@ export default function App() {
           name="Home"
           component={Home}
           options={{ title: "RanDOM WisDOM" }}
+        />
+        <Stack.Screen
+          name="Discuss"
+          component={Discuss}
+          options={{
+            headerShown: true,
+          }}
         />
         <Stack.Screen
           name="Text"

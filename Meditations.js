@@ -33,7 +33,7 @@ export default function Meditations({ navigation }) {
                 borderBottomWidth: activeTab === index ? 2 : 0,
                 borderBottomColor:
                   activeTab === index ? "#FF7F00" : "transparent",
-                fontSize: 16,
+                fontSize: 20,
               }}
             >
               {tab}
@@ -139,7 +139,7 @@ const medPageStyles = StyleSheet.create({
   },
 
   listItem: {
-    paddingVertical: 16, // Increase padding for better touch target size
+    paddingVertical: 20, // Increase padding for better touch target size
     paddingHorizontal: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",

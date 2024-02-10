@@ -46,7 +46,7 @@ export default function SearchPage() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log("Success:", JSON.stringify(data, null, 2));
         const responseBody = JSON.parse(data.body);
         if (responseBody.Items && responseBody.Items.length > 0) {
           setSearchResults(responseBody.Items);
@@ -98,10 +98,11 @@ export default function SearchPage() {
       <TextInput
         style={searchPageStyles.input}
         value={searchQuery}
-        accessibilityLabel="Enter your search term here"
+        accessibilityLabel="Search input field"
         onChangeText={(text) => setSearchQuery(text.toLowerCase())}
         autoCorrect={false}
         autoCapitalize="none"
+        placeholder="Enter a search term..."
       />
 
       <View style={styles.buttonContainer}>
@@ -166,7 +167,6 @@ const searchPageStyles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     margin: 10,
-    // padding: 5,
     paddingTop: 12,
     paddingBottom: 12,
     paddingLeft: 8,
@@ -175,21 +175,16 @@ const searchPageStyles = StyleSheet.create({
 
   textContainer: {
     width: "90%",
-    alignSelf: "center", // Add this line to center the content
+    alignSelf: "center",
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: "#fff",
-    // borderColor: '#000',
-    // borderWidth: 3,
-    // borderRadius: 15,
   },
 
   title: {
     fontSize: 30,
     fontWeight: "bold",
     color: "#007BFF",
-    // marginTop: 10,
-    // marginBottom: 10,
     textAlign: "center",
     paddingTop: 10,
   },

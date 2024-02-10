@@ -85,7 +85,7 @@ export default StyleSheet.create({
   },
 
   footerText: {
-    fontSize: 24,
+    fontSize: 28,
     color: "#000",
     marginTop: 5,
     marginBottom: 5,

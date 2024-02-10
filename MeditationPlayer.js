@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import {
+  ScrollView,
   View,
   Text,
   StyleSheet,
   ActivityIndicator,
   Image,
   ImageBackground,
+  Dimensions,
 } from "react-native";
 import { Audio, InterruptionModeAndroid } from "expo-av";
 import styles from "./styles/Styles";
@@ -152,7 +154,7 @@ export default function MeditationPlayer({ route, navigation }) {
       style={playerStyles.bgTiles}
       resizeMode="repeat"
     >
-      <View contentContainerStyle={playerStyles.container}>
+      <ScrollView contentContainerStyle={playerStyles.container}>
         <View style={playerStyles.closeContainer}>
           <Ionicons
             name="close-circle-outline"
@@ -233,7 +235,7 @@ export default function MeditationPlayer({ route, navigation }) {
             {formatTime(playbackPosition)} / {formatTime(playbackDuration)}
           </Text>
         </View>
-      </View>
+      </ScrollView>
     </ImageBackground>
   );
 }
@@ -253,6 +255,7 @@ const playerStyles = StyleSheet.create({
   },
 
   transportContainer: {
+    width: "90%",
     backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent white
     borderRadius: 10,
     margin: 20,

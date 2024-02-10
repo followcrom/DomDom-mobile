@@ -12,6 +12,7 @@ import {
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function TextPage({ navigation }) {
+  const [discussPhrase, setDiscussPhrase] = useState("");
   const [outputText, setOutputText] = useState("");
   const [phraseId, setPhraseId] = useState(0);
   const [title, setTitle] = useState("");
@@ -29,12 +30,6 @@ export default function TextPage({ navigation }) {
     Dimensions.addEventListener("change", handleOrientationChange);
   }, []);
 
-  // Clean up: Remove the event listener
-  //   return () => {
-  //     Dimensions.removeEventListener("change", handleOrientationChange);
-  //   };
-  // }, []);
-
   useEffect(() => {
     getRandomPhrase();
   }, []);
@@ -51,6 +46,7 @@ export default function TextPage({ navigation }) {
       if (data && data.id !== undefined && data.phrase !== undefined) {
         console.log(data);
         setOutputText(data.phrase);
+        setDiscussPhrase(data.phrase);
         setPhraseId(data.id);
         setTitle(data.title);
       } else {
@@ -100,6 +96,16 @@ export default function TextPage({ navigation }) {
       <View style={textPageStyles.buttonContainer}>
         <TouchableOpacity
           style={textPageStyles.buttonIcon}
+          onPress={() => navigation.navigate("Discuss", { discussPhrase })}
+        >
+          <Ionicons name="chatbubbles-sharp" size={48} color="white" />
+          <Text style={textPageStyles.buttonText}>Discuss</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={textPageStyles.buttonContainer}>
+        <TouchableOpacity
+          style={textPageStyles.buttonIcon}
           onPress={() => navigation.navigate("Search")}
         >
           <MaterialCommunityIcons
@@ -139,7 +145,7 @@ const textPageStyles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#007BFF",
     marginTop: 10,
