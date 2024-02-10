@@ -28,6 +28,17 @@ export default function TestPage() {
   const [userInput, setUserInput] = useState("");
   const [conversationHistory, setConversationHistory] = useState([]);
 
+  useEffect(() => {
+    if (apiKey === undefined) {
+      // If apiKey is undefined, it might still be loading
+      setTextOutput("Loading...");
+    } else if (!apiKey) {
+      // If apiKey is explicitly falsey but not undefined, it's missing
+      setTextOutput("API Key is missing.");
+    }
+    // You might not need an 'else' clause if "Loading..." is the default state
+  }, [apiKey]); // Depend on apiKey to re-run this effect when apiKey changes
+
   // On screen load
   useEffect(() => {
     // Check if screen is in landscape mode
@@ -37,13 +48,6 @@ export default function TestPage() {
       setIsLandscape(width > height);
     };
     Dimensions.addEventListener("change", handleOrientationChange);
-
-    // Check if apiKey is available
-    if (!apiKey) {
-      setTextOutput("API Key is missing.");
-    } else {
-      setTextOutput("Loading...");
-    }
 
     // Check if OpenAI request has already been made
     if (!openAIRequested) {
