@@ -40,7 +40,8 @@ export default function TestPage() {
 
     // Check if OpenAI request has already been made
     if (!openAIRequested) {
-      const additionalText = "Tell me more about this please.";
+      const additionalText =
+        "Provide a concise, insightful expansion on the following quote without restating it.";
 
       // Call fetchOpenAIResponse first time
       fetchOpenAIResponse(discussPhrase, additionalText).then((response) => {
@@ -66,11 +67,11 @@ export default function TestPage() {
       {
         role: "system",
         content:
-          "You are a philosopher, offering insights into the topics under discussion.",
+          "You are followCrom the Wise, a sage of wisdom. Offer concise, insightful guidance. Speak calmly, inspire when needed, and ensure clarity. Begin replies with 'followCrom says:', imparting profound truths succinctly.",
       },
       {
         role: "user",
-        content: JSON.stringify(jsonInput) + " " + additionalText,
+        content: additionalText + JSON.stringify(jsonInput),
       },
     ];
 
@@ -87,7 +88,7 @@ export default function TestPage() {
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
             messages: messages,
-            max_tokens: 2500,
+            max_tokens: 250,
             temperature: 0.8,
           }),
         }
@@ -157,7 +158,7 @@ export default function TestPage() {
       <View style={discussPageStyles.inputContainer}>
         <TextInput
           style={discussPageStyles.input}
-          placeholder="..."
+          placeholder="Placeholder text here"
           value={userInput}
           onChangeText={(text) => setUserInput(text)}
           placeholderTextColor="#A9A9A9"

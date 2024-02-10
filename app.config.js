@@ -12,6 +12,7 @@ export default {
       image: "./assets/splash.png",
       resizeMode: "contain",
       backgroundColor: "#ffffff",
+      resizeMode: "contain",
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -41,6 +42,8 @@ export default {
       },
       openAiApiKey: process.env.OPENAI_API_KEY,
     },
-    runtimeVersion: "1.1.1",
+    runtimeVersion: {
+      policy: "appVersion",
+    },
   },
 };
