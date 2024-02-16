@@ -21,7 +21,7 @@ export default function SearchPage() {
   const [title, setTitle] = useState("");
 
   const handleSearch = () => {
-    const searchTerm = searchQuery.trim(); // Remove any leading or trailing white spaces.
+    const searchTerm = searchQuery.trim();
 
     // Check if the search term is empty.
     if (!searchTerm) {
@@ -30,7 +30,6 @@ export default function SearchPage() {
       return; // Exit the function early.
     }
 
-    // Set the "Searching..." message.
     setOutputText("Searching...");
     setSearchPerformed(true);
 
@@ -46,18 +45,17 @@ export default function SearchPage() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", JSON.stringify(data, null, 2));
         const responseBody = JSON.parse(data.body);
         if (responseBody.Items && responseBody.Items.length > 0) {
           setSearchResults(responseBody.Items);
-          setCurrentIndex(0); // Reset currentIndex to 0
-          setOutputText(responseBody.Items[0].phrase); // Show the first result
+          setCurrentIndex(0);
+          setOutputText(responseBody.Items[0].phrase);
           setPhraseId(responseBody.Items[0].id);
           setTitle(responseBody.Items[0].title);
         } else {
           setSearchResults([]);
           setOutputText("No matches found for your search term.");
-          setCurrentIndex(0); // Reset currentIndex to 0 when no matches are found
+          setCurrentIndex(0);
         }
       })
       .catch((error) => {
@@ -83,7 +81,7 @@ export default function SearchPage() {
     if (searchResults.length > 0 && currentIndex < searchResults.length) {
       setOutputText(searchResults[currentIndex].phrase);
       setPhraseId(searchResults[currentIndex].id);
-      setTitle(searchResults[currentIndex].title || null); // Update the title here
+      setTitle(searchResults[currentIndex].title || null);
     }
   }, [currentIndex, searchResults]);
 
@@ -112,7 +110,7 @@ export default function SearchPage() {
             size={48}
             color="white"
           />
-          <Text style={searchPageStyles.buttonText}>Search</Text>
+          <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
 
@@ -171,6 +169,7 @@ const searchPageStyles = StyleSheet.create({
     paddingBottom: 12,
     paddingLeft: 8,
     paddingRight: 8,
+    backgroundColor: "#fff",
   },
 
   textContainer: {
@@ -207,32 +206,5 @@ const searchPageStyles = StyleSheet.create({
     fontSize: 15,
     color: "#FF7F00",
     textAlign: "center",
-  },
-
-  buttonContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "60%",
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: "#12abef",
-    borderColor: "#FFF",
-    borderWidth: 2.5,
-    borderRadius: 20,
-    padding: 10,
-  },
-
-  buttonIcon: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-    marginLeft: 10, // Add some space between the icon and text
-    padding: 10,
   },
 });

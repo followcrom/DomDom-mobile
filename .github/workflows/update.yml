@@ -31,4 +31,6 @@ jobs:
         run: npm install
 
       - name: Publish update
-        run: eas update --branch release --message "${{ github.event.head_commit.message }}"
+        env:
+          EXPO_PUBLIC_API_KEY: ${{ secrets.EXPO_PUBLIC_OPENAI_API_KEY }}
+        run: eas update --branch preview --message "${{ github.event.head_commit.message }}"

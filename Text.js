@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import styles from "./styles/Styles";
 
 export default function TextPage({ navigation }) {
   const [discussPhrase, setDiscussPhrase] = useState("");
@@ -44,7 +45,6 @@ export default function TextPage({ navigation }) {
 
       // Check if data and data.id are defined before proceeding
       if (data && data.id !== undefined && data.phrase !== undefined) {
-        console.log(data);
         setOutputText(data.phrase);
         setDiscussPhrase(data.phrase);
         setPhraseId(data.id);
@@ -54,7 +54,6 @@ export default function TextPage({ navigation }) {
         setOutputText("An error occurred. Please try again.");
       }
     } catch (err) {
-      console.log("Caught an error:", err);
       console.error(err);
       setOutputText("An error occurred. Please try again.");
     }
@@ -83,29 +82,26 @@ export default function TextPage({ navigation }) {
         </Text>
       </View>
 
-      <View style={textPageStyles.buttonContainer}>
-        <TouchableOpacity
-          style={textPageStyles.buttonIcon}
-          onPress={getRandomPhrase}
-        >
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.buttonIcon} onPress={getRandomPhrase}>
           <Ionicons name="bulb-outline" size={48} color="white" />
-          <Text style={textPageStyles.buttonText}>Generate Wisdom</Text>
+          <Text style={styles.buttonText}>Generate Wisdom</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={textPageStyles.buttonContainer}>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={textPageStyles.buttonIcon}
+          style={styles.buttonIcon}
           onPress={() => navigation.navigate("Discuss", { discussPhrase })}
         >
           <Ionicons name="chatbubbles-sharp" size={48} color="white" />
-          <Text style={textPageStyles.buttonText}>Discuss</Text>
+          <Text style={styles.buttonText}>Discuss</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={textPageStyles.buttonContainer}>
+      <View style={styles.buttonContainer}>
         <TouchableOpacity
-          style={textPageStyles.buttonIcon}
+          style={styles.buttonIcon}
           onPress={() => navigation.navigate("Search")}
         >
           <MaterialCommunityIcons
@@ -113,7 +109,7 @@ export default function TextPage({ navigation }) {
             size={48}
             color="white"
           />
-          <Text style={textPageStyles.buttonText}>Search Widsom</Text>
+          <Text style={styles.buttonText}>Search Widsom</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -138,10 +134,11 @@ const textPageStyles = StyleSheet.create({
 
   textContainer: {
     width: "90%",
-    alignSelf: "center", // Add this line to center the content
+    alignSelf: "center",
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: "#fff",
+    borderRadius: 5,
   },
 
   title: {
@@ -149,7 +146,6 @@ const textPageStyles = StyleSheet.create({
     fontWeight: "bold",
     color: "#007BFF",
     marginTop: 10,
-    // marginBottom: 10,
     textAlign: "center",
   },
 
@@ -163,31 +159,5 @@ const textPageStyles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     padding: 10,
-  },
-
-  buttonContainer: {
-    alignItems: "center",
-    width: 300,
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: "#007BFF",
-    borderColor: "#FFF",
-    borderWidth: 2.5,
-    borderRadius: 20,
-    padding: 10,
-  },
-
-  buttonIcon: {
-    flexDirection: "row",
-    // justifyContent: 'center',
-    // alignItems: 'center',
-  },
-
-  buttonText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "white",
-    marginLeft: 10, // Add some space between the icon and text
-    padding: 16,
   },
 });

@@ -65,13 +65,13 @@ export default function Meditations({ navigation }) {
       const response = await fetch(url);
 
       if (!response.ok) {
-        console.error("HTTP error", response.status);
+        console.error("HTTP error:", response.status);
       } else {
         const data = await response.json();
         setAudioFiles(data);
       }
     } catch (err) {
-      console.error("Fetch error", err);
+      console.error("Fetch error:", err);
     }
   };
 
@@ -80,9 +80,6 @@ export default function Meditations({ navigation }) {
   }, [activeTab]);
 
   const handlePress = (url, name) => {
-    console.log(
-      `Navigating to MeditationPlayer with URL: ${url} and name: ${name}`
-    );
     navigation.navigate("MeditationPlayer", { audioUrl: url, title: name });
   };
 

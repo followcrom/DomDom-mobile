@@ -103,8 +103,6 @@ export default function SpeechPage({ navigation }) {
 
     // Update the history stack
     setHistoryStack([...historyStack, currentIndex]);
-    console.log("History stack:", historyStack);
-    console.log("Current index:", currentIndex);
 
     // Select a random audio file from the array
     const randomIndex = Math.floor(Math.random() * audioFiles.length);
@@ -125,7 +123,7 @@ export default function SpeechPage({ navigation }) {
     newSound.setOnPlaybackStatusUpdate(async (status) => {
       if (status.didJustFinish) {
         setIsPlaying(false);
-        // setSound(null);
+        setSound(null);
       }
     });
   }
@@ -216,17 +214,6 @@ export default function SpeechPage({ navigation }) {
     }
   }
 
-  // stop but play the same sound again from start.
-  // Note: We're not setting 'setSound(null)' or 'setIsSoundLoaded(false)'
-  // because we're keeping the sound loaded.
-  // async function stopSound() {
-  //   if (sound) {
-  //     await sound.stopAsync();
-  //     await sound.setPositionAsync(0);
-  //     setIsPlaying(false);
-  //   }
-  // }
-
   // pulse animation
   const startPulsing = () => {
     animation = Animated.loop(
@@ -234,24 +221,24 @@ export default function SpeechPage({ navigation }) {
         Animated.sequence([
           Animated.timing(opacityValue, {
             toValue: 1,
-            duration: 1000,
+            duration: 500,
             useNativeDriver: false,
           }),
           Animated.timing(opacityValue, {
-            toValue: 0.4,
-            duration: 1000,
+            toValue: 0.5,
+            duration: 500,
             useNativeDriver: false,
           }),
         ]),
         Animated.sequence([
           Animated.timing(scaleValue, {
             toValue: 1.2,
-            duration: 3000,
+            duration: 1000,
             useNativeDriver: false,
           }),
           Animated.timing(scaleValue, {
             toValue: 1,
-            duration: 3000,
+            duration: 1000,
             useNativeDriver: false,
           }),
         ]),
@@ -291,14 +278,6 @@ export default function SpeechPage({ navigation }) {
     Linking.openURL("https://www.linkedin.com/in/followCrom/");
   };
   // End Links
-
-  // useEffect(() => {
-  //   return sound
-  //     ? () => {
-  //         sound.unloadAsync();
-  //       }
-  //     : undefined;
-  // }, [sound]);
 
   // This will run when the screen is blurred (exited)
   useEffect(() => {
@@ -374,7 +353,7 @@ export default function SpeechPage({ navigation }) {
             transform: [{ scale: scaleValue }],
           }}
         >
-          <Foundation name="sound" size={80} color="#FF7F00" />
+          <Foundation name="sound" size={80} color="white" />
         </Animated.View>
       </View>
 
@@ -395,7 +374,7 @@ export default function SpeechPage({ navigation }) {
 
       <View style={speechPageStyles.divider}></View>
 
-      <Text style={speechPageStyles.subtitle}>Visit us online:</Text>
+      <Text style={speechPageStyles.subtitle}>Visit me online:</Text>
 
       {/* Linked buttons  */}
       <View style={speechPageStyles.iconButtonsRow}>
@@ -413,7 +392,7 @@ export default function SpeechPage({ navigation }) {
           style={speechPageStyles.iconButtons}
           name="globe-outline"
           size={38}
-          color="blue"
+          color="#12abef"
           onPress={() => {
             openfC();
           }}
@@ -423,7 +402,7 @@ export default function SpeechPage({ navigation }) {
           style={speechPageStyles.iconButtons}
           name="mail-open-outline"
           size={38}
-          color="green"
+          color="grey"
           onPress={() => {
             openContact();
           }}
@@ -433,7 +412,7 @@ export default function SpeechPage({ navigation }) {
           style={speechPageStyles.iconButtons}
           name="logo-linkedin"
           size={38}
-          color="#12abef"
+          color="blue"
           onPress={() => {
             openLi();
           }}
@@ -442,7 +421,7 @@ export default function SpeechPage({ navigation }) {
 
       <View style={speechPageStyles.divider}></View>
 
-      <Text style={speechPageStyles.subtitle}>Technologies (unclickable):</Text>
+      <Text style={speechPageStyles.subtitle}>Thanks to:</Text>
 
       {/* Technologies  */}
       <View style={speechPageStyles.iconButtonsRow}>
@@ -497,7 +476,9 @@ const speechPageStyles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50, // Radius of the circle (half of the diameter)
-    backgroundColor: "#FFF",
+    borderWidth: 2.5,
+    borderColor: "white",
+    backgroundColor: "#31788a",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 40,
@@ -523,7 +504,7 @@ const speechPageStyles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "white",
-    marginLeft: 10, // Add some space between the icon and text
+    marginLeft: 10,
     padding: 16,
   },
 
@@ -553,6 +534,6 @@ const speechPageStyles = StyleSheet.create({
   },
 
   iconButtons: {
-    margin: 15, // Adds space around each button
+    margin: 15,
   },
 });

@@ -12,9 +12,9 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
-import Constants from "expo-constants";
 
-const apiKey = Constants.expoConfig.extra.openAiApiKey;
+// import Constants from "expo-constants";
+// const apiKey = Constants.expoConfig.extra.openAiApiKey;
 
 export default function TestPage() {
   const route = useRoute(); // Use useRoute hook to access route.params
@@ -28,20 +28,8 @@ export default function TestPage() {
   const [userInput, setUserInput] = useState("");
   const [conversationHistory, setConversationHistory] = useState([]);
 
-  useEffect(() => {
-    if (apiKey === undefined) {
-      // If apiKey is undefined, it might still be loading
-      setOutputText("Loading...");
-    } else if (!apiKey) {
-      // If apiKey is explicitly falsey but not undefined, it's missing
-      setOutputText("API Key is missing.");
-    }
-    // You might not need an 'else' clause if "Loading..." is the default state
-  }, [apiKey]); // Depend on apiKey to re-run this effect when apiKey changes
-
   // On screen load
   useEffect(() => {
-    // Check if screen is in landscape mode
     const { width, height } = Dimensions.get("window");
     setIsLandscape(width > height);
     const handleOrientationChange = ({ window: { width, height } }) => {
@@ -73,7 +61,8 @@ export default function TestPage() {
   // Call OpenAI API function
   async function fetchOpenAIResponse(jsonInput, additionalText) {
     setLoading(true);
-    // const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+    const apiKey = process.env.EXPO_PUBLIC_OPENAI_API_KEY;
+
     const messages = [
       {
         role: "system",
@@ -100,14 +89,12 @@ export default function TestPage() {
             model: "gpt-3.5-turbo",
             messages: messages,
             max_tokens: 250,
-            temperature: 0.8,
+            temperature: 0.5,
           }),
         }
       );
 
       const json = await response.json();
-      // Pretty print in the console
-      console.log("JSON Response:", JSON.stringify(json, null, 2));
       gptResponse = json.choices[0].message.content;
       setLoading(false);
       return gptResponse;
@@ -128,15 +115,17 @@ export default function TestPage() {
       fetchOpenAIResponse(updatedHistory, "").then((response) => {
         setOutputText(response);
 
-        const updatedHistoryX = [
-          ...updatedHistory,
-          { role: "assistant", content: response },
-        ];
-        setConversationHistory(updatedHistoryX);
+        // prevHistory is automatically provided by React when you use the state setter function. React handles it for you when the state update function is called
+        setConversationHistory((prevHistory) => [
+          ...prevHistory,
+          { role: "user", content: userInput }, // Re-add user input to ensure it's included
+          { role: "assistant", content: response }, // Add the new assistant response
+        ]);
+
         // Pretty print in the console
         console.log(
-          "updatedHistoryX:",
-          JSON.stringify(updatedHistoryX, null, 2)
+          "Conversation history:",
+          JSON.stringify(conversationHistory, null, 2)
         );
       });
 
@@ -169,7 +158,8 @@ export default function TestPage() {
       <View style={discussPageStyles.inputContainer}>
         <TextInput
           style={discussPageStyles.input}
-          placeholder="Placeholder text here"
+          accessibilityLabel="Input field"
+          placeholder="Ask followCrom"
           value={userInput}
           onChangeText={(text) => setUserInput(text)}
           placeholderTextColor="#A9A9A9"
@@ -269,7 +259,7 @@ const discussPageStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "white",
-    marginLeft: 10, // Add some space between the icon and text
+    marginLeft: 10,
     padding: 10,
   },
 });

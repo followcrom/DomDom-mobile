@@ -1,6 +1,6 @@
 export default {
   expo: {
-    name: "Random Wisdom",
+    name: "RanDOM WisDOM",
     description:
       "Find peace in the daily chaos with curated wisdom from mindful minds.",
     slug: "MyFirstHandiApp",
@@ -22,7 +22,7 @@ export default {
     assetBundlePatterns: ["**/*"],
     android: {
       package: "online.followcrom.RandomWisdom",
-      versionCode: 6,
+      versionCode: 7,
       adaptiveIcon: {
         foregroundImage: "./assets/adaptive-icon.png",
         backgroundColor: "#ffffff",

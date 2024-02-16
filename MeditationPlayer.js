@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   Image,
   ImageBackground,
-  Dimensions,
 } from "react-native";
 import { Audio, InterruptionModeAndroid } from "expo-av";
 import styles from "./styles/Styles";
@@ -142,9 +141,7 @@ export default function MeditationPlayer({ route, navigation }) {
         setIsPlaying(false);
       }
     };
-    // Add the event listener
     const unsubscribe = navigation.addListener("blur", resetPage);
-    // Remove the 'blur' event listener
     return unsubscribe;
   }, [sound, navigation]);
 
@@ -243,7 +240,6 @@ export default function MeditationPlayer({ route, navigation }) {
 // Corresponding styles
 const playerStyles = StyleSheet.create({
   container: {
-    // flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
   },
@@ -307,8 +303,8 @@ const playerStyles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     zIndex: 1,
-    // backgroundColor: "#fff",
   },
+
   progressBarContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
