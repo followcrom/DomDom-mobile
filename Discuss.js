@@ -159,7 +159,7 @@ export default function TestPage() {
         <TextInput
           style={discussPageStyles.input}
           accessibilityLabel="Input field"
-          placeholder="Ask followCrom"
+          placeholder="What do you think?"
           value={userInput}
           onChangeText={(text) => setUserInput(text)}
           placeholderTextColor="#A9A9A9"
@@ -172,7 +172,7 @@ export default function TestPage() {
           onPress={followUps}
         >
           <Ionicons name="chatbubbles-sharp" size={36} color="white" />
-          <Text style={discussPageStyles.buttonText}>Respond</Text>
+          <Text style={discussPageStyles.buttonText}>Ask followCrom</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -228,7 +228,7 @@ const discussPageStyles = StyleSheet.create({
     width: 300,
     marginTop: 10,
     marginBottom: 10,
-    backgroundColor: "#007BFF",
+    backgroundColor: "#a09ec1",
     borderColor: "#FFF",
     borderWidth: 2.5,
     borderRadius: 20,
