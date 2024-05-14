@@ -35,6 +35,8 @@ export default function TextPage({ navigation }) {
     getRandomPhrase();
   }, []);
 
+  // imose a delay of 1 second before the next phrase is fetched
+
   const getRandomPhrase = async () => {
     try {
       setOutputText("Loading...");
@@ -49,6 +51,7 @@ export default function TextPage({ navigation }) {
         setDiscussPhrase(data.phrase);
         setPhraseId(data.id);
         setTitle(data.title);
+        console.log("Phrase ID:", data.id);
       } else {
         console.error("Received unexpected data structure:", data);
         setOutputText("An error occurred. Please try again.");
